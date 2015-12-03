@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>droolsDemo</artifactId>
+        <groupId>com.isiran</groupId>
+        <version>1.0</version>
+    </parent>
+    <description>
+        This module intended to act as Rule Management System
+        to handle Business Rules containing create / edit / run rules
+        which uses drools rule engine in core
+    </description>
+    <developers>
+        <developer>
+            <name>saeed.shokoohi</name>
+            <email>saeed.shokuhi@gmail.com</email>
+            <roles>
+                <role>designer</role>
+                <role>major developer</role>
+            </roles>
+        </developer>
+    </developers>
+    <inceptionYear>2015</inceptionYear>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.isiran</groupId>
+    <artifactId>rm</artifactId>
+    <version>1.0.0</version>
+    <properties>
+
+        <spring.version>3.2.5.RELEASE</spring.version>
+        <kie.version>6.2.0.Final</kie.version>
+        <drools.version>6.2.0.Final</drools.version>
+    </properties>
+    <dependencies>
+        <!--spring dependencied-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+        <!--drools dependencies-->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <version>${kie.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-internal</artifactId>
+            <version>${kie.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-core</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-compiler</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-spring</artifactId>
+            <version>${kie.version}</version>
+        </dependency>
+        <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-ci</artifactId>
+        <version>${kie.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-spring</artifactId>
+            <version>${kie.version}</version>
+        </dependency>
+
+        <!--end of drools depencies-->
+    </dependencies>
+</project>

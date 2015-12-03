@@ -1,0 +1,7 @@
+
+dialect  "java"
+
+rule "test"
+    when
+    then
+end
