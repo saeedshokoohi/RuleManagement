@@ -1,6 +1,6 @@
 package rule_engine;
 
-import org.drools.core.event.DebugRuleRuntimeEventListener;
+import org.kie.api.event.rule.DebugRuleRuntimeEventListener;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import rule_dto.CompiledRule;
