@@ -22,6 +22,8 @@ import java.io.Serializable;
 public class GoodStudentRule implements Serializable {
 
 
+
+
     public String checkRule(Student student)
     {
         String result="";
