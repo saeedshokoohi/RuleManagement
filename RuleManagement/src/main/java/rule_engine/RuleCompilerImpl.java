@@ -10,6 +10,8 @@ import org.kie.api.io.KieResources;
 import rule_dto.CompiledRule;
 import rule_dto.Rule;
 
+import java.util.UUID;
+
 /**
  * Created by Saeed on 02/12/2015.
  */
@@ -23,6 +25,7 @@ public class RuleCompilerImpl  implements RuleCompiler {
 
     @Override
     public CompiledRule compileRule(MethodResult result, Rule rule){
+
 
         CompiledRule compiledRule=new CompiledRule();
 

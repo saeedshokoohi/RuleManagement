@@ -62,6 +62,11 @@
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>5.0.5.Final</version>
+        </dependency>
 
 
         <!--drools dependencies-->
