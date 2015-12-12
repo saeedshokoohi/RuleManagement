@@ -9,6 +9,9 @@
 package repository.support;
 
 
+import org.hibernate.search.jpa.FullTextEntityManager;
+
+import javax.persistence.Query;
 import javax.persistence.metamodel.SingularAttribute;
 import java.util.List;
 

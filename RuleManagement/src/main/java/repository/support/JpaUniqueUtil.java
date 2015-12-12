@@ -147,10 +147,15 @@ public class JpaUniqueUtil {
         return null;
     }
 
+    private boolean equalsIgnoreCase(String columnName, String name) {
+        return WordUtils.equalsIgnoreCase(columnName,name);
+    }
+
+
     private Field columnNameToField(Class<?> clazz, String columnName) {
         for (Field field : clazz.getFields()) {
             Column column = field.getAnnotation(Column.class);
-            if (equalsIgnoreCase(columnName, column.name())) {
+            if (WordUtils.equalsIgnoreCase(columnName, column.name())) {
                 return field;
             }
         }

@@ -64,9 +64,10 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-c3p0</artifactId>
-            <version>5.0.5.Final</version>
+            <artifactId>hibernate-search</artifactId>
+            <version>5.5.1.Final</version>
         </dependency>
+
 
 
         <!--drools dependencies-->

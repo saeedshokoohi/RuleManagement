@@ -36,6 +36,14 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.isiran.ruleRepo:rule_entities:1.0" level="project" />
     <orderEntry type="module" module-name="RuleManagement" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-orm:5.5.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-engine:5.5.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:5.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-backward-codecs:5.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:5.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:5.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-facet:5.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:5.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:4.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.1.11" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.1.11" level="project" />
