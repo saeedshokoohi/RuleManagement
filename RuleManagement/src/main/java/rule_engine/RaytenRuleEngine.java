@@ -1,5 +1,6 @@
 package rule_engine;
 
+import org.kie.api.builder.Message;
 import rule_dto.*;
 import rule_dto.CompiledRule;
 import rule_dto.Rule;
@@ -63,9 +64,14 @@ public class RaytenRuleEngine {
         MethodResult result=new MethodResult();
 
         CompiledRule compiledRule = getCompiler().compileRule(result, rule);
+        runResult.setCompileResult(result);
         if(result.isDone() && compiledRule!=null)
         {
-             runResult = getRunner().runRule(compiledRule,ruleFact);
+             runResult = getRunner().runRule(compiledRule, ruleFact);
+        }
+        else
+        {
+            System.out.println(result.getDisplayMessages());
         }
         return runResult;
     }

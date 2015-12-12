@@ -1,8 +1,12 @@
 package rule_engine;
 
+import org.drools.compiler.kie.builder.impl.InternalKieModule;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.Message;
+import org.kie.api.builder.ReleaseId;
+import org.kie.api.io.KieResources;
 import rule_dto.CompiledRule;
 import rule_dto.Rule;
 
@@ -24,20 +28,56 @@ public class RuleCompilerImpl  implements RuleCompiler {
 
         //step 3 : write the resources to fileSystem
         KieFileSystem fileSystem = baseRuleAgents.kieServices.newKieFileSystem();
-        fileSystem= fileSystem.write("/src/main/java/temp.drl",rule.getResource());
+      //  fileSystem= fileSystem.write("/src/main/java/temp.drl",rule.getResource());
+        if(rule!=null && rule.getResource()!=null && rule.getRuleName()!=null )
+        fileSystem= fileSystem.write("src/main/resources/"+rule.getRuleName(),rule.getResource());
 
         //step 4 : build the rule are temporary stored in filesystem
         KieBuilder kieBuilder=baseRuleAgents.kieServices.newKieBuilder(fileSystem);
         KieBuilder r = kieBuilder.buildAll();
-        if(!r.getResults().hasMessages()) {
+        if(!r.getResults().hasMessages(Message.Level.ERROR)) {
             result.setDone(true);
+            result.setMessages(r.getResults().getMessages());
             compiledRule.setBuilder(kieBuilder);
         }
         else
         {
             result.setDone(false);
             compiledRule.setCompileResult(r.getResults());
+            result.setErrorMessages(r.getResults().getMessages(Message.Level.ERROR));
         }
+        result.setMessages(r.getResults().getMessages());
+        result.setWarningMessages(r.getResults().getMessages(Message.Level.WARNING));
+        result.setInfoMessages(r.getResults().getMessages(Message.Level.INFO));
         return  compiledRule;
+    }
+
+    public static byte[] createKJar(KieServices ks,
+                                    ReleaseId releaseId,
+                                    String pom,
+                                    String... drls) {
+        KieFileSystem kfs = ks.newKieFileSystem();
+        if( pom != null ) {
+            kfs.write("pom.xml", pom);
+        } else {
+            kfs.generateAndWritePomXML(releaseId);
+        }
+        KieResources kr = ks.getResources();
+        for (int i = 0; i < drls.length; i++) {
+            if (drls[i] != null) {
+                kfs.write( kr.newByteArrayResource( drls[i].getBytes() ).setSourcePath("my/pkg/drl"+i+".drl") );
+            }
+        }
+        KieBuilder kb = ks.newKieBuilder(kfs).buildAll();
+        if( kb.getResults().hasMessages( org.kie.api.builder.Message.Level.ERROR ) ) {
+            for( org.kie.api.builder.Message result : kb.getResults().getMessages() ) {
+                System.out.println(result.getText());
+            }
+            return null;
+        }
+        InternalKieModule kieModule = (InternalKieModule) ks.getRepository()
+                .getKieModule(releaseId);
+        byte[] jar = kieModule.getBytes();
+        return jar;
     }
 }

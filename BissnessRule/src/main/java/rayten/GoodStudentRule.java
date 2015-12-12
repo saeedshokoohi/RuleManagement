@@ -21,10 +21,6 @@ import java.io.Serializable;
 @Named
 public class GoodStudentRule implements Serializable {
 
-
-
-
-
     public String checkRule(Student student)
     {
         String result="";

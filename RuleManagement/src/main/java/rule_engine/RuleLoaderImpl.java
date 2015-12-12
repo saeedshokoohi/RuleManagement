@@ -26,9 +26,9 @@ public class RuleLoaderImpl implements RuleLoader  {
         //step 1 : creating the kie service to use for creating Kie objects
         baseRuleAgents=new BaseRuleAgents();
         baseRuleAgents.kieServices=KieServices.Factory.get();
-        baseRuleAgents.kieResources=baseRuleAgents.kieServices.getResources();
-        baseRuleAgents.fileSystem=baseRuleAgents.kieServices.newKieFileSystem();
-        baseRuleAgents.kieRepository=baseRuleAgents.kieServices.getRepository();
+   //     baseRuleAgents.kieResources=baseRuleAgents.kieServices.getResources();
+  //      baseRuleAgents.fileSystem=baseRuleAgents.kieServices.newKieFileSystem();
+  //      baseRuleAgents.kieRepository=baseRuleAgents.kieServices.getRepository();
 
 
     }
@@ -47,10 +47,14 @@ Rule retRuleDto=new Rule();
         //step 2 : creating resource
         //resource can be made from string , file , url ,reader ,....
         //that's great!
+
+        //if single rule is type of DRL
+        retRuleDto.setRuleName("tempSingleRule.drl");
         String myRule = getRuleAsString(query);
-        Resource resource = baseRuleAgents.kieResources.newReaderResource((Reader) new StringReader(myRule));
+        Resource resource = baseRuleAgents.kieServices.getResources().newReaderResource(new StringReader(myRule));
         resource.setResourceType(ResourceType.DRL);
         retRuleDto.setResource(resource);
+        retRuleDto.setRuleText(myRule);
 
 
 
@@ -59,15 +63,16 @@ Rule retRuleDto=new Rule();
     return retRuleDto;
     }
     private String getRuleAsString(RuleQuery query) {
-        return "package isirandrools.rayten.rayten_pkg2;\n" +
+        return "import entities.Student;\n" +
+                "dialect  \"java\"\n" +
                 "\n" +
-                "rule \"r_rule2\"\n" +
-                "dialect \"java\"\n" +
-                "when \n" +
-                "$student: entities.Student(grade>1 )\n" +
-                "then\n" +
-                "$student.alert();\n" +
-                "end\n";
+                "rule \"ruleGoodStudent\"\n" +
+                "    when\n" +
+                "    $s:Student(grade>0)\n" +
+                "    then\n" +
+                "    System.out.println($s.getName());\n" +
+                "    $s.alert();\n" +
+                "end";
     }
     private File getRuleFile(RuleQuery query) {
         return null;

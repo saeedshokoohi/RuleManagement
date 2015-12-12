@@ -1,0 +1,10 @@
+import entities.Student;
+dialect  "java"
+
+rule "ruleGoodStudent"
+    when
+    $s:Student(grade>0)
+    then
+    System.out.println($s.getName());
+    $s.alert();
+end

@@ -47,6 +47,7 @@ public class Student{
     }
     public String alert()
     {
+        System.out.println("student name :"+getName()+" grade :"+getGrade());
         return this.getName();
     }
 }
