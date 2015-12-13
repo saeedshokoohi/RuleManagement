@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import rayten.GoodStudentRule;
+import repository.RawRuleRepository;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -31,6 +32,8 @@ public class StudentController implements Serializable {
     ApplicationContext applicationContext;
     @Autowired
     WebApplicationContext webApplicationContext;
+    @Autowired
+    RawRuleRepository rawRuleRepository;
 
     public String getResult() {
         return result;

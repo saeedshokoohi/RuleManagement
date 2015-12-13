@@ -8,6 +8,7 @@
  */
 package repository;
 
+import domain.RmCompiledRule;
 import domain.RmRawRule;
 import repository.support.GenericRepository;
 
@@ -16,9 +17,9 @@ import javax.inject.Singleton;
 
 @Named
 @Singleton
-public class RawRuleRepository extends GenericRepository<RmRawRule> {
-    public RawRuleRepository() {
-        super(RmRawRule.class);
+public class CompiledRuleRepository extends GenericRepository<RmCompiledRule> {
+    public CompiledRuleRepository() {
+        super(RmCompiledRule.class);
     }
 
 

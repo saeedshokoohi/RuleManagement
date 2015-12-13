@@ -1,5 +1,7 @@
 package domain;
 
+import org.jsoup.Connection;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.UUID;
@@ -9,21 +11,11 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "rm_compiled_rule", schema = "public", catalog = "rm_db")
-public class RmCompiledRule {
-    private UUID id;
+public class RmCompiledRule extends BaseEntity {
     private String ruleName;
     private String releaseNumber;
     private byte[] kjarFile;
 
-    @Id
-    @Column(name = "id", nullable = false)
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     @Basic
     @Column(name = "rule_name", nullable = false, length = 500)
