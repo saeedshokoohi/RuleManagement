@@ -8,7 +8,7 @@ import java.util.UUID;
  * Created by saeed on 12/12/2015.
  */
 @Entity
-@Table(name = "rm_raw_rule", schema = "public", catalog = "rm_db")
+@Table(name = "rm_raw_rule", schema = "public")
 public class RmRawRule extends BaseEntity {
     private String ruleName;
     private String ruleDescription;

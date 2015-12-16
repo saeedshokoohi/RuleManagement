@@ -18,8 +18,56 @@
             <artifactId>biz_rules</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.isiran</groupId>
+            <artifactId>rm</artifactId>
+            <version>1.0.0</version>
+            <type>war</type>
+        </dependency>
 
 
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.6</version>
+            <configuration>
+                <overlays>
+                    <overlay>
+                        <groupId>com.isiran</groupId>
+                        <artifactId>rm</artifactId>
+
+                        <excludes>
+                            <exclude>WEB-INF\classes\META-INF\persistence.xml</exclude>
+                            <exclude>META-INF\persistence.xml</exclude>
+                        </excludes>
+                    </overlay>
+                </overlays>
+            </configuration>
+        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+
+                    <!--<overlays>-->
+                        <!--<overlay>-->
+                            <!--<groupId>com.isiran</groupId>-->
+                            <!--<artifactId>rm</artifactId>-->
+
+                            <!--<excludes>-->
+                                <!--<exclude>WEB-INF\classes\META-INF\persistence.xml</exclude>-->
+                                <!--<exclude>META-INF\persistence.xml</exclude>-->
+                            <!--</excludes>-->
+                        <!--</overlay>-->
+                    <!--</overlays>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

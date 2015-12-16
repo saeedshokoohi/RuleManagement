@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="RuleManagement:war">
+    <output-path>$PROJECT_DIR$/RuleManagement/target</output-path>
+    <root id="archive" name="rm-1.0.0.war">
+      <element id="artifact" artifact-name="RuleManagement:war exploded" />
+    </root>
+  </artifact>
+</component>
