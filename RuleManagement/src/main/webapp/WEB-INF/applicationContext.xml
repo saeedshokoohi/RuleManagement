@@ -23,6 +23,7 @@
         <property name="driverClassName" value="org.postgresql.Driver"/>
 
 
+
     </bean>
 
 
@@ -35,6 +36,7 @@
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="punit" />
         <property name="dataSource" ref="DataSource" />
+
         <!--<property name="persistenceXmlLocation" value="WEB-INF/persistence.xml"/>-->
     </bean>
 
@@ -45,6 +47,7 @@
     <!-- Session Factory Declaration -->
     <bean id="SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="DataSource" />
+
      <!--  <property name="packagesToScan">
             <list>
                 <value>net.javabeat.managedController</value>
@@ -55,9 +58,10 @@
                 <value>net.javabeat.spring.model.Customer</value>
             </list>
         </property>-->
+
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.DB2400Dialect</prop>
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.DB2400Dialect</prop>-->
                 <prop key="hibernate.show_sql">true</prop>
             </props>
         </property>

@@ -7,8 +7,8 @@ import java.util.UUID;
 /**
  * Created by saeed on 12/12/2015.
  */
-@Entity
 @Table(name = "base_entity", schema = "public", catalog = "rm_db")
+@MappedSuperclass
 public class BaseEntity implements Identifiable<UUID> {
     protected UUID id;
 
