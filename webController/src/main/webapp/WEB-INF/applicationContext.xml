@@ -8,17 +8,17 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
-        >
+>
     <context:component-scan base-package="repository"/>
     <context:component-scan base-package="controller"/>
     <context:annotation-config/>
     <context:spring-configured/>
-   <!--<bean id="studentController"  class="net.javabeat.managedController.StudentController" name="studentController"/>-->
+    <!--<bean id="studentController"  class="net.javabeat.managedController.StudentController" name="studentController"/>-->
     <!-- Data Source Declaration -->
     <bean id="DataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="url" value="jdbc:postgresql://localhost:5432/rm_db"></property>
-        <property name="username" value="postgres" />
-        <property name="password" value="123" />
+        <property name="username" value="postgres"/>
+        <property name="password" value="123"/>
         <property name="driverClassName" value="org.postgresql.Driver"/>
 
 
@@ -26,36 +26,35 @@
 
 
     <!--<bean id="entityManager" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
-        <!--<property name="persistenceUnitName" ref="punit"/>-->
+    <!--<property name="persistenceUnitName" ref="punit"/>-->
 
 
     <!--</bean>-->
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="punit" />
-        <property name="dataSource" ref="DataSource" />
+        <property name="persistenceUnitName" value="punit"/>
+        <property name="dataSource" ref="DataSource"/>
 
         <!--<property name="persistenceXmlLocation" value="WEB-INF/persistence.xml"/>-->
     </bean>
 
 
-
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     <!-- Session Factory Declaration -->
     <bean id="SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="DataSource" />
-     <!--  <property name="packagesToScan">
-            <list>
-                <value>net.javabeat.managedController</value>
-            </list>
-        </property>-->
-       <!-- <property name="annotatedClasses">
-            <list>
-                <value>net.javabeat.spring.model.Customer</value>
-            </list>
-        </property>-->
+        <property name="dataSource" ref="DataSource"/>
+        <!--  <property name="packagesToScan">
+               <list>
+                   <value>net.javabeat.managedController</value>
+               </list>
+           </property>-->
+        <!-- <property name="annotatedClasses">
+             <list>
+                 <value>net.javabeat.spring.model.Customer</value>
+             </list>
+         </property>-->
         <property name="hibernateProperties">
             <props>
                 <!--<prop key="hibernate.dialect">org.hibernate.dialect.DB2400Dialect</prop>-->
@@ -65,8 +64,27 @@
     </bean>
 
     <!-- Enable the configuration of transactional behavior based on annotations -->
-    <tx:annotation-driven transaction-manager="txManager"/>
-
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <property name="scopes">
+            <map>
+                <entry key="view">
+                    <bean class="util.ViewScope"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean name="resources" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+        <property name="basename">
+            <value>local.rm_rawrule</value>
+        </property>
+    </bean>
+    <bean name="msg" class="util.ResourcesUtil">
+        <property name="msg" ref="resources">
+        </property>
+    </bean>
     <!-- Transaction Manager is defined -->
     <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="SessionFactory"/>

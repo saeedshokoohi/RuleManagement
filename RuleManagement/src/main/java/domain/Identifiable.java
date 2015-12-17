@@ -12,9 +12,8 @@ import java.io.Serializable;
 
 /**
  * By making entities implement this interface we can easily retrieve from the
- * {@link com.jaxio.appli.repository.support.GenericRepository} the identifier property of the entity.
  */
-public interface Identifiable<PK extends Serializable> {
+public interface Identifiable<PK extends Serializable> extends Serializable {
 
     /**
      * @return the primary key

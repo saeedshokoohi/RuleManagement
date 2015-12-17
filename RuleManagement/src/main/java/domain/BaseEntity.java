@@ -14,6 +14,7 @@ public class BaseEntity implements Identifiable<UUID> {
 
     @Id
     @Column(name = "id", nullable = false)
+    @org.hibernate.annotations.Type(type="pg-uuid")
     public UUID getId() {
         return id;
     }
