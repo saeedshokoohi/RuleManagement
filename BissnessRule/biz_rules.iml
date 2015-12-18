@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping>
+          <factory-entry name="punit" value="DataSource" />
+        </datasource-mapping>
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/java/META-INF/persistence.xml" />
+      </configuration>
+    </facet>
     <facet type="JRebel" name="JRebel">
       <configuration>
         <option name="autosync" value="false" />
@@ -22,16 +32,6 @@
         <option name="xmlDir" />
       </configuration>
     </facet>
-    <facet type="jpa" name="JPA">
-      <configuration>
-        <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping>
-          <factory-entry name="punit" value="DataSource" />
-        </datasource-mapping>
-        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/java/META-INF/persistence.xml" />
-      </configuration>
-    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -47,9 +47,9 @@
     <orderEntry type="library" name="Maven: com.isiran.ruleRepo:rule_entities:1.0" level="project" />
     <orderEntry type="module" module-name="RuleManagement" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:4.0" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.2.11" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.2.11" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.2.4" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.2.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet.jsp:jsp-api:2.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.web:el-impl:2.2" level="project" />
@@ -70,12 +70,13 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:4.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:4.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-test:4.2.3.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-webflow:2.3.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-faces:2.4.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-binding:2.4.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: opensymphony:ognl:2.6.11" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-binding:2.3.3.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-js:2.3.3.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-js-resources:2.3.3.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.0.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-webflow:2.4.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-js:2.4.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.webflow:spring-js-resources:2.4.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.0.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:4.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />

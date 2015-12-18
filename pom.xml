@@ -47,21 +47,20 @@
         <!-- JSF -->
         <dependency>
             <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>2.2.11</version>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.2.4</version>
         </dependency>
         <dependency>
             <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>2.2.11</version>
+            <artifactId>jsf-api</artifactId>
+            <version>2.2.4</version>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -138,11 +137,17 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.webflow</groupId>-->
+            <!--<artifactId>spring-webflow</artifactId>-->
+            <!--<version>2.3.3.RELEASE</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.webflow</groupId>
-            <artifactId>spring-webflow</artifactId>
-            <version>2.3.3.RELEASE</version>
+            <artifactId>spring-faces</artifactId>
+            <version>2.4.1.RELEASE</version>
         </dependency>
+
 
         <!-- Hibernate dependencies -->
         <dependency>

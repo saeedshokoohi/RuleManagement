@@ -81,7 +81,7 @@
             <value>local.rm_rawrule</value>
         </property>
     </bean>
-    <bean name="msg" class="util.ResourcesUtil">
+    <bean name="msgUtil" class="util.ResourcesUtil">
         <property name="msg" ref="resources">
         </property>
     </bean>
