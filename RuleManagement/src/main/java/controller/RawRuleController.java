@@ -8,6 +8,7 @@ import repository.RawRuleRepository;
 import util.ClassFinder;
 import util.MessageUtil;
 import util.ResourcesUtil;
+import util.ViewUtil;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -40,11 +41,12 @@ public class RawRuleController {
     public void save(RmRawRule entity)
     {
        // RmRawRule entity=new RmRawRule();
-        entity.setResourceType("DRL");
+      //  entity.setResourceType("DRL");
       //  entity.setRuleName("firstRule");
      //   entity.setVersionNumber("1.0");
       //  rawRuleRepository.findAll();
         try {
+            entity.setImports(ViewUtil.ObjectToJsonStr(getRuleVM().getImportedClasses()));
             rawRuleRepository.saveOrUpdate(entity);
             messageUtil.addInfoMessage("","saved_successfully");
         }catch (Exception ex)
@@ -106,12 +108,21 @@ public class RawRuleController {
     public void importClass(RmRawRule rmRawRule)
     {
         System.out.printf("importClass called");
+
         String importstr=makeImportStr(getRuleVM().getSelectedclass());
-        rmRawRule.setRuleContentStr(importstr+rmRawRule.getRuleContentStr());
+        if(!getRuleVM().getImportedClasses().contains(getRuleVM().getSelectedclass())) {
+            getRuleVM().getImportedClasses().add(getRuleVM().getSelectedclass());
+        }
+        rmRawRule.setRuleContentStr(importstr + rmRawRule.getRuleContentStr());
 
     }
 
+     public void  removeImport(String className)
+     {
+         getRuleVM().getImportedClasses().remove(className);
+         getRuleVM().getRawRule().setRuleContentStr( getRuleVM().getRawRule().getRuleContentStr().replace(makeImportStr(className),""));
+     }
     private String makeImportStr(String selectedclass) {
-        return "import "+selectedclass+";\n";
+        return "import "+selectedclass+";\r\n";
     }
 }

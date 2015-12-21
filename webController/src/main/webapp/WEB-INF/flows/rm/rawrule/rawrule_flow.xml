@@ -7,6 +7,7 @@
 
     <view-state id="rawrule" view="/WEB-INF/flows/rm/rawrule/rawrule.xhtml">
         <on-entry>
+            <evaluate expression="ruleVM.initRawRule()"/>
             <set name="entity" value="ruleVM.rawRule"/>
         </on-entry>
         <transition on="list" to="rawruleList" ></transition>
@@ -17,9 +18,11 @@
             <set name="entity" value="ruleVM.rawRule"/>
         </on-entry>
         <transition on="edit" to="rawrule">
+            <set name="ruleVM.newMode" value="false"/>
         </transition>
         <transition on="new" to="rawrule">
             <evaluate expression="rawRuleController.initRawRule(ruleVM)" />
+            <set name="ruleVM.newMode" value="true"/>
         </transition>
     </view-state>
 </flow>

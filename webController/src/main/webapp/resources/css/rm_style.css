@@ -64,3 +64,9 @@ body{
 {
 padding: 3px;
 }
+.codingStyle
+{
+    font-family: monospace !important;
+    font-size: 13px !important;
+    direction: ltr !important;
+}

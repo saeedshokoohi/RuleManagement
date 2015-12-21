@@ -17,6 +17,7 @@
   // This is the old interface, kept around for now to stay
   // backwards-compatible.
   CodeMirror.showHint = function(cm, getHints, options) {
+    debugger;
     if (!getHints) return cm.showHint(options);
     if (options && options.async) getHints.async = true;
     var newOpts = {hint: getHints};
@@ -25,13 +26,15 @@
   };
 
   CodeMirror.defineExtension("showHint", function(options) {
+    debugger;
     options = parseOptions(this, this.getCursor("start"), options);
     var selections = this.listSelections()
     if (selections.length > 1) return;
     // By default, don't allow completion when something is selected.
     // A hint function can have a `supportsSelection` property to
     // indicate that it can handle selections.
-    if (this.somethingSelected()) {
+    //if (this.somethingSelected()) {
+    if (false) {
       if (!options.hint.supportsSelection) return;
       // Don't try with cross-line selections
       for (var i = 0; i < selections.length; i++)
@@ -47,6 +50,7 @@
   });
 
   function Completion(cm, options) {
+    debugger;
     this.cm = cm;
     this.options = options;
     this.widget = null;

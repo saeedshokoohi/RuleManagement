@@ -18,6 +18,7 @@ public class RmRawRule extends BaseEntity {
     private String resourceType;
     private byte[] ruleContent;
     private String ruleContentStr;
+    private String imports;
 
 
 
@@ -29,6 +30,16 @@ public class RmRawRule extends BaseEntity {
 
     public void setRuleName(String ruleName) {
         this.ruleName = ruleName;
+    }
+
+    @Basic
+    @Column(name = "imports", nullable = false, length = 500)
+    public String getImports() {
+        return imports;
+    }
+
+    public void setImports(String imports) {
+        this.imports = imports;
     }
 
     @Basic
