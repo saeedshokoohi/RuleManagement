@@ -1,14 +1,18 @@
 package controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import domain.RmRawRule;
 
 import domain.RuleResourceType;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import repository.RawRuleRepository;
+import rule_engine.RuleContentTypes;
 import util.ViewUtil;
 
-import javax.inject.Named;
-import java.io.IOException;
+import javax.faces.model.SelectItem;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -32,6 +36,18 @@ public class RuleViewModel implements Serializable {
     private Boolean isNewMode;
     private String compileMessage;
     private Object availableGroups;
+    private String ruleContentType;
+    private boolean fromFile=false;
+    private UploadedFile ruleFile;
+    private StreamedContent ruleFileForDownload;
+
+    public UploadedFile getRuleFile() {
+        return ruleFile;
+    }
+
+    public void setRuleFile(UploadedFile file) {
+        this.ruleFile = file;
+    }
 
     public String getCompileMessage() {
         return compileMessage;
@@ -41,8 +57,14 @@ public class RuleViewModel implements Serializable {
         this.compileMessage = compileMessage;
     }
 
-    public RuleResourceType[] getResourceTypes() {
-        return RuleResourceType.values();
+    public List<SelectItem> getResourceTypes() {
+        List<SelectItem> retList=new ArrayList<SelectItem>();
+        for(RuleResourceType rrt:RuleResourceType.values())
+        {
+            retList.add(new SelectItem(rrt.getKey(), rrt.getDescription()));
+        }
+
+        return retList;
     }
 
     public Boolean getNewMode() {
@@ -76,11 +98,13 @@ public class RuleViewModel implements Serializable {
         if (isNewMode == null || isNewMode) {
             this.rawRule = new RmRawRule();
             this.rawRule.setRuleName("ruleName");
+            this.rawRule.setRuleContentType(RuleContentTypes.TEXT_AS_RULE.name());
             this.rawRule.setRuleContentStr(RawRuleRepository.getInitRuleTemplate("ruleName"));
         }else
         //edit mode
         {
             importedClasses=stringToList(this.rawRule.getImports());
+
         }
     }
 
@@ -178,5 +202,30 @@ public class RuleViewModel implements Serializable {
 
     public Object getAvailableGroups() {
         return availableGroups;
+    }
+
+    public void setRuleContentType(String ruleContentType) {
+        this.ruleContentType = ruleContentType;
+    }
+
+    public String getRuleContentType() {
+        return ruleContentType;
+    }
+
+    public void setFromFile(boolean fromFile) {
+        this.fromFile = fromFile;
+    }
+
+    public boolean isFromFile() {
+        fromFile=getRawRule().getRuleContentTypeObject()==RuleContentTypes.FILE_AS_RULE;
+        return fromFile;
+    }
+
+    public void setRuleFileForDownload(StreamedContent ruleFileForDownload) {
+        this.ruleFileForDownload = ruleFileForDownload;
+    }
+
+    public StreamedContent getRuleFileForDownload() {
+        return ruleFileForDownload;
     }
 }

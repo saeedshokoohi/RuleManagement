@@ -3,8 +3,12 @@ package util;
 //import org.codehaus.jackson.map.ObjectMapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -43,5 +47,19 @@ public class ViewUtil {
                 htmlList = "<ul>" + htmlList + "</ul>";
         }
         return  htmlList;
+    }
+
+    public static StreamedContent convertToFileStream(UploadedFile ruleFile) throws IOException {
+        InputStream stream=ruleFile.getInputstream();
+        StreamedContent file=new DefaultStreamedContent(stream, ruleFile.getContentType(), ruleFile.getFileName());
+        return  file;
+    }
+
+    public static String getExtensionFromFileName(String fileName) {
+        if(fileName!=null) {
+            String[] parts = fileName.split("\\.");
+            if(parts.length>1)return parts[parts.length-1];
+        }
+        return "";
     }
 }

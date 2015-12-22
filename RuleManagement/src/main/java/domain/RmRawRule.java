@@ -1,5 +1,7 @@
 package domain;
 
+import rule_engine.RuleContentTypes;
+
 import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -21,7 +23,8 @@ public class RmRawRule extends BaseEntity {
     private String ruleContentStr;
     private String imports;
     private String groupId;
-
+    private String ruleContentType;
+    private String fileType;
 
 
     @Basic
@@ -103,11 +106,34 @@ public class RmRawRule extends BaseEntity {
         this.ruleContent = ruleContent;
     }
 
+    @Basic
+    @Column(name = "rule_content_type", nullable = true)
+    public String getRuleContentType() {
+        if(ruleContentType==null || ruleContentType.isEmpty())
+            ruleContentType=RuleContentTypes.TEXT_AS_RULE.name();
+        return ruleContentType.trim();
+    }
+
+    public void setRuleContentType(String ruleContentType) {
+        this.ruleContentType = ruleContentType;
+    }
+    @Basic
+    @Column(name = "file_type", nullable = true)
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
     @Transient
     public String getRuleContentStr() {
 if(ruleContent==null)return  "";
         try {
-            ruleContentStr=  new String(ruleContent, "UTF-8");
+            if(ruleContentType.trim().equalsIgnoreCase(RuleContentTypes.TEXT_AS_RULE.name())) {
+                ruleContentStr = new String(ruleContent, "UTF-8");
+            }
             return ruleContentStr;
 
         } catch (UnsupportedEncodingException e) {
@@ -167,5 +193,33 @@ if(ruleContent==null)return  "";
 
     public void setOneToMany(List<RmCompiledRule> oneToMany) {
         this.oneToMany = oneToMany;
+    }
+
+    @Transient
+    public String getRuleFileName() {
+        try {
+            if(getRuleContentType().contains(RuleContentTypes.FILE_AS_RULE.name()))
+            return ruleName + "." + getRuleFileExtension();
+        }catch (Exception ex){}
+        return "";
+    }
+    @Transient
+    public String getRuleFileExtension() {
+        try {
+            if(getRuleContentType().contains(RuleContentTypes.FILE_AS_RULE.name()))
+                return  RuleResourceType.valueOf(resourceType).getExtension();
+        }catch (Exception ex){}
+        return "";
+    }
+   @Transient
+    public RuleContentTypes getRuleContentTypeObject() {
+       try{
+           return  RuleContentTypes.valueOf(getRuleContentType());
+       }catch (Exception ex){}
+        return RuleContentTypes.TEXT_AS_RULE;
+    }
+
+    public void setRuleContentTypeObject(RuleContentTypes ruleContentTypeObject) {
+        setRuleContentType(ruleContentTypeObject.name());
     }
 }

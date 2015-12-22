@@ -19,7 +19,7 @@
 <h:outputStylesheet name="codemirror/show-hint.css"/>
 <h:body>
 
-    <h:form prependId="false">
+    <h:form prependId="false" enctype="multipart/form-data">
         <div id="rm_main_panel">
             <div id="rm_right_panel" class="rm_panel">right</div>
             <div id="rm_center_panel" class="rm_panel">
@@ -107,7 +107,9 @@
                         </td>
                         <td class="rm_tdinput">
                             <p:selectOneMenu style="width: 120px" id="resourceType" value="#{entity.resourceType}">
-                                <f:selectItems value="#{ruleVM.resourceTypes}"></f:selectItems>
+                                <f:selectItems value="#{ruleVM.resourceTypes}" var="val"
+                                               itemLable="#{msgUtil.getProperty(val.label)}"
+                                               ></f:selectItems>
                             </p:selectOneMenu>
                         </td>
 
@@ -133,11 +135,46 @@
 
                     </tr>
                     <tr>
+                        <td></td>
+                        <td colspan="5">
+                            <p:selectOneRadio id="customRadio" style="float: right;direction: rtl"  value="#{ruleVM.rawRule.ruleContentType}" columns="2" layout="grid">
+                                <f:selectItem itemLabel="#{msgUtil.getProperty('rule_from_editor')}" itemValue="TEXT_AS_RULE" />
+                                <f:selectItem  itemLabel="#{msgUtil.getProperty('ruleFromFile')}" itemValue="FILE_AS_RULE" />
+                                <p:ajax  listener="#{rawRuleController.fileTypeChanged(ruleVM)}" process="@form" update="@form" oncomplete="makeEditorCodeMirror()"/>
+                            </p:selectOneRadio>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="8">
+
+                            <h:panelGroup style="direction: rtl;float: right"  rendered="#{ruleVM.fromFile}">
+                                <p:fileUpload value="#{ruleVM.ruleFile}"  uploadLabel="#{msgUtil.getProperty('rule_file')}" label="#{msgUtil.getProperty('rule_file')}" required="true" invalidFileMessage="#{msgUtil.getProperty('error_rule_file_type_not_valid')}"
+                                              requiredMessage="#{msgUtil.getProperty('required_rule_file')}"
+
+                                              mode="simple" skinSimple="true" allowTypes="/(\.|\/)(drl|gdrl|rdrl|xlsx|xls)$/" />
+                                <p:commandButton value="#{msgUtil.getProperty('upload_rule_file')}" ajax="false" actionListener="#{rawRuleController.uploadRuleFile}"  />
+
+                                <p:spacer></p:spacer>
+
+                                <p:commandButton disabled="#{!rawRuleController.canDownloadFile(ruleVM)}" value="#{msgUtil.getProperty('dowload_rule_file')}" ajax="false" actionListener="#{rawRuleController.makeDownloadFile(ruleVM)}" icon="ui-icon-arrowthick-1-s">
+                                    <p:fileDownload value="#{ruleVM.ruleFileForDownload}"/>
+                                </p:commandButton>
+
+
+                            </h:panelGroup>
+                        </td>
+                    </tr>
+                    <tr>
+
                         <td colspan="8" style="direction: ltr">
+
+                           <h:panelGroup rendered="#{!ruleVM.fromFile}">
                             <p:inputTextarea value="#{entity.ruleContentStr}" id="ruleEditorTextArea" cols="150"
                                              rows="20">
 
                             </p:inputTextarea>
+                           </h:panelGroup>
                         </td>
                     </tr>
                 </table>

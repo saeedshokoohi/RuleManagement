@@ -10,7 +10,7 @@
 
 <h:body>
 
-    <h:form prependId="false">
+    <h:form prependId="false" enctype="multipart/form-data">
         <f:view>
             <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             <h1>Create Personnel</h1>
@@ -32,6 +32,11 @@
                 </h:panelGrid>
 
                 <h:commandButton action="#{testController.save(entity)}" value="Save" />
+                <p:growl id="messages" showDetail="true" />
+
+                <p:fileUpload value="#{testController.ruleFile}"  mode="simple" skinSimple="true"/>
+
+                <p:commandButton value="Submit" ajax="false" actionListener="#{testController.uploadRuleFile}"  />
                 <br/>
             </h:form>
         </f:view>

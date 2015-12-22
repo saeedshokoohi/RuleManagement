@@ -1,12 +1,15 @@
 package controller;
 
 import domain.RmRawRule;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.context.annotation.Scope;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 import repository.RawRuleRepository;
 import rule_engine.MethodResult;
 import rule_engine.RaytenRuleEngine;
+import rule_engine.RuleContentTypes;
 import util.ClassFinder;
 import util.MessageUtil;
 import util.ResourcesUtil;
@@ -16,6 +19,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +51,10 @@ public class RawRuleController {
 
         try {
             entity.setImports(ViewUtil.ObjectToJsonStr(getRuleVM().getImportedClasses()));
+//            if(getRuleVM().isFromFile() && getRuleVM().getRuleFile()!=null) {
+//                entity.setRuleContent(getRuleVM().getRuleFile().getContents());
+//                entity.setFileType(getRuleVM().getRuleFile().getContentType());
+//            }
             rawRuleRepository.saveOrUpdate(entity);
             messageUtil.addInfoMessage("","saved_successfully");
         }catch (Exception ex)
@@ -161,5 +171,47 @@ public class RawRuleController {
      }
     private String makeImportStr(String selectedclass) {
         return "import "+selectedclass+";\r\n";
+    }
+    public void uploadRuleFile() {
+        RuleViewModel ruleViewModel=getRuleVM();
+        //checking if any file has uploaded
+        if(ruleViewModel != null && ruleViewModel.getRuleFile()!=null) {
+            //checking if uploaded file is valid based on selected type
+           String ext=  ViewUtil.getExtensionFromFileName(ruleViewModel.getRuleFile().getFileName());
+            if(ext.equalsIgnoreCase(ruleViewModel.getRawRule().getRuleFileExtension())) {
+                messageUtil.addInfoMessage("","file_uploaded_successfully");
+                FacesMessage message = new FacesMessage("");
+                ruleViewModel.getRuleFile();
+                ruleViewModel.getRawRule().setRuleContent(ruleViewModel.getRuleFile().getContents());
+                ruleViewModel.getRawRule().setFileType(ruleViewModel.getRuleFile().getContentType());
+            }
+            else
+            {
+                messageUtil.addErrorMessage("","error_rule_file_type_not_valid");
+            }
+
+        }
+    }
+    public void fileTypeChanged(RuleViewModel ruleViewModel)
+    {
+        if(RuleContentTypes.valueOf(ruleViewModel.getRawRule().getRuleContentType())==RuleContentTypes.FILE_AS_RULE)ruleViewModel.setFromFile(true);
+        else ruleViewModel.setFromFile(false);
+    }
+    public  void makeDownloadFile(RuleViewModel ruleVM)
+    {
+        if(ruleVM.getRawRule().getRuleContentType() !=null && ruleVM.getRawRule().getRuleContentType().contains(RuleContentTypes.FILE_AS_RULE.name())) {
+            InputStream stream = new ByteArrayInputStream(ruleVM.getRawRule().getRuleContent());
+            StreamedContent streanContent = new DefaultStreamedContent(stream,ruleVM.getRawRule().getFileType(),ruleVM.getRawRule().getRuleFileName());
+            ruleVM.setRuleFileForDownload(streanContent);
+        }
+    }
+    public boolean canDownloadFile(RuleViewModel ruleViewModel)
+    {
+        if(ruleViewModel.getRawRule().getRuleContentType().contains(RuleContentTypes.FILE_AS_RULE.name())
+             &&  ruleViewModel.getRawRule().getFileType()!=null &&  !ruleViewModel.getRawRule().getFileType().isEmpty() && ruleViewModel.getRawRule().getRuleContent().length>0  )
+            return true;
+        else
+            return false;
+
     }
 }

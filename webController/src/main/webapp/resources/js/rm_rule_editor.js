@@ -85,7 +85,10 @@ function autocomplete(t, c) {
 
 }
 function makeEditorCodeMirror(btnid) {
+    debugger;
     var myTextArea = $('#' + textAreaId)[0];
+    if (myTextArea !=undefined) {
+
     var options =
     {
         mode: "text/x-java",
@@ -102,4 +105,5 @@ function makeEditorCodeMirror(btnid) {
 
     myCodeMirror = CodeMirror.fromTextArea(myTextArea, options);
     console.log('code mirror called');
+}
 }

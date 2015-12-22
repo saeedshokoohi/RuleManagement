@@ -4,17 +4,19 @@ package domain;
  * Created by saeed on 22/12/2015.
  */
 public enum RuleResourceType {
-    DRL("DRL","drl","DroolsRule");
+    DRL("DRL","drl","DroolsRule"),
+    DTABLE("DTABLE","xlsx","DecisionTable"),
+    PKG("PKG","jar","BinaryPackage");
 
     RuleResourceType(String key, String extension, String descrption) {
         this.key = key;
         this.extension = extension;
-        this.descrption = descrption;
+        this.description = descrption;
     }
 
     private String key;
     private String extension;
-    private String descrption;
+    private String description;
 
     public String getKey() {
         return key;
@@ -32,12 +34,12 @@ public enum RuleResourceType {
         this.extension = extension;
     }
 
-    public String getDescrption() {
-        return descrption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrption(String descrption) {
-        this.descrption = descrption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

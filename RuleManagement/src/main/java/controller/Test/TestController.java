@@ -3,6 +3,8 @@ package controller.Test;
 import controller.RuleViewModel;
 import domain.RmRawRule;
 import domain.Test.Personnel;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 import repository.RawRuleRepository;
@@ -16,6 +18,8 @@ import util.MessageUtil;
 import util.ResourcesUtil;
 import util.ViewUtil;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -54,6 +58,26 @@ public class TestController {
 
     public Personnel init(Personnel entity) {
         return new Personnel();
+    }
+    private UploadedFile ruleFile;
+
+    public UploadedFile getRuleFile() {
+        return ruleFile;
+    }
+
+    public void setRuleFile(UploadedFile file) {
+        this.ruleFile = file;
+    }
+    public void uploadRuleFile() {
+
+        if(ruleFile!=null) {
+            FacesMessage message = new FacesMessage("Succesful", ruleFile.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+    public void handleFileUpload(FileUploadEvent event) {
+        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     public static boolean isNationalCodeValid(String code)
     {

@@ -63,7 +63,12 @@
             </props>
         </property>
     </bean>
-
+    <!--<bean id="MultipartFilter" class="org.springframework.web.multipart.support.MultipartFilter"></bean>-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="100000000"/>
+    </bean>
     <!-- Enable the configuration of transactional behavior based on annotations -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <!--<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">-->
