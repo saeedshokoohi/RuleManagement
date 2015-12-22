@@ -2,6 +2,8 @@ package rule_engine;
 
 import domain.RmCompiledRule;
 import domain.RmRawRule;
+import org.drools.compiler.kproject.ReleaseIdImpl;
+import org.kie.api.builder.ReleaseId;
 import repository.CompiledRuleRepository;
 import rule_dto.*;
 import rule_dto.CompiledRule;
@@ -17,6 +19,9 @@ import java.util.UUID;
 @Named
 public class RaytenRuleEngine {
 
+    private static final String DEFAULT_GROUP = "com.isiran.rayten";
+    private static final String DEFAULT_ARTIFACT = "rule";
+    private static final String DEFAULT_VERSION = "1.0.SNAPSHOT";
     @Inject
     CompiledRuleRepository compiledRuleRepository;
 
@@ -73,7 +78,7 @@ public class RaytenRuleEngine {
         Rule rule = getLoader().getSingleRule(query);
         MethodResult result=new MethodResult();
 
-        CompiledRule compiledRule = getCompiler().compileRule(result, rule);
+        CompiledRule compiledRule = getCompiler().compileRule(result, rule, null);
         runResult.setCompileResult(result);
         if(result.isDone() && compiledRule!=null)
         {
@@ -92,7 +97,7 @@ public class RaytenRuleEngine {
         MethodResult result=new MethodResult();
         Rule rule = getLoader().getRuleFromRawRule(rawRule);
         try {
-            CompiledRule compiledRule = getCompiler().compileRule(result, rule);
+            CompiledRule compiledRule = getCompiler().compileRule(result, rule, null);
         }catch (Exception ex)
         {
             result.setDone(false);
@@ -104,7 +109,8 @@ public class RaytenRuleEngine {
         MethodResult result=new MethodResult();
         Rule rule = getLoader().getRuleFromRawRule(rawRule);
         try {
-            CompiledRule compiledRule = getCompiler().compileRule(result, rule);
+            ReleaseId releaseId=makeReleaseId(rawRule.getGroupId(),rawRule.getRuleName(),rawRule.getVersionNumber());
+            CompiledRule compiledRule = getCompiler().compileRule(result, rule,releaseId);
             if(result.isDone()) {
                 RmCompiledRule rmCompiledRule = new RmCompiledRule();
                 rmCompiledRule.setRuleName(rawRule.getRuleName());
@@ -124,5 +130,12 @@ public class RaytenRuleEngine {
             result.setDone(false);
         }
         return  result;
+    }
+    ReleaseId makeReleaseId(String group,String artifact,String version)
+    {
+        if(group==null || group.trim().length()==0)group=DEFAULT_GROUP;
+        if(artifact==null || artifact.trim().length()==0)artifact=DEFAULT_ARTIFACT;
+        if(version==null || version.trim().length()==0)version=DEFAULT_VERSION;
+        return new ReleaseIdImpl(group,artifact,version);
     }
 }

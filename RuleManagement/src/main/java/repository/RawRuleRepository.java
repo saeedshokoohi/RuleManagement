@@ -40,8 +40,8 @@ public class RawRuleRepository extends GenericRepository<RmRawRule> {
 
 
     public List<String> findGroups(String val) {
-        Query q = getEm().createQuery("select r.groupId from RmRawRule r group by r.groupId having groupId like %:str%")
-                .setParameter("str", val);
+        Query q = getEm().createQuery("select r.groupId from RmRawRule r group by r.groupId having groupId like :str")
+                .setParameter("str", "%"+val+"%");
         return q.getResultList();
     }
 }
