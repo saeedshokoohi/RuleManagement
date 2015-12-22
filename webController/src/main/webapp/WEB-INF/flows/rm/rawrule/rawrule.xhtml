@@ -24,43 +24,67 @@
             <div id="rm_right_panel" class="rm_panel">right</div>
             <div id="rm_center_panel" class="rm_panel">
                 <div id="rm_top_toolbar" class="rm_panel">
-                    <p:commandButton ajax="false" value="#{msgUtil.getProperty('saveRule')}" icon="ui-icon-disk"
-                                     action="#{rawRuleController.save(entity)}"></p:commandButton>
+                    <div class="rm_hpanel">
+                        <p:commandButton ajax="false" value="#{msgUtil.getProperty('saveRule')}" icon="ui-icon-disk"
+                                         action="#{rawRuleController.save(entity)}"></p:commandButton>
 
-                    <p:commandButton ajax="false" immediate="true" value="#{msgUtil.getProperty('showRuleList')}"
-                                     icon="ui-icon-search" action="list"></p:commandButton>
+                        <p:commandButton ajax="false" immediate="true" value="#{msgUtil.getProperty('showRuleList')}"
+                                         icon="ui-icon-search" action="list"></p:commandButton>
+                    </div>
+                    <div class="verticalLine" style="height: 30px"></div>
+                    <div class="rm_hpanel">
+                        <p:commandButton ajax="false" rendered="#{entity.id!=null}" immediate="true"
+                                         value="#{msgUtil.getProperty('compileRule')}"
+                                         icon="ui-icon-gear"
+                                         action="#{rawRuleController.compileRule(entity)}"></p:commandButton>
+
+                        <p:commandButton ajax="false" rendered="#{entity.id!=null}" immediate="true"
+                                         value="#{msgUtil.getProperty('publish_rule')}"
+                                         icon="ui-icon-signal-diag"
+                                         action="#{rawRuleController.publishRule(entity)}"></p:commandButton>
+                    </div>
                 </div>
                 <div id="rm_message_bar">
-                    <p:messages>
+                    <p:messages id="info">
 
                     </p:messages>
+
+                    <div class="rm_compileErrors">
+
+
+                        <h:outputLabel value="#{ruleVM.compileMessage}" escape="false"></h:outputLabel>
+
+                    </div>
+
                 </div>
- <h:inputHidden id="classList" value="#{ruleVM.classList}"/>
- <h:inputHidden id="methodList" value="#{ruleVM.methodList}"/>
+                <h:inputHidden id="classList" value="#{ruleVM.classList}"/>
+                <h:inputHidden id="methodList" value="#{ruleVM.methodList}"/>
 
                 <table>
+
                     <tr>
+                        <td class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('ruleGroup')}" for="ruleGroup"/>
+                        </td>
+                        <td class="rm_tdinput" colspan="3">
+                            <p:autoComplete id="ruleGroup" style="width: 200px" value="#{entity.groupId}"
+                                            itemLabel="#{pck}"
+                                            itemValue="#{pck}"
+                                            forceSelection="false"
+                                            required="true"
+                                            requiredMessage="#{msgUtil.getProperty('required_groupId')}"
+                                            completeMethod="#{rawRuleController.completeGroupId}" var="pck"
+                                            cache="true"></p:autoComplete>
+
+                        </td>
                         <td class="rm_tdlabel">
                             <p:outputLabel value="#{msgUtil.getProperty('rule_name')}" for="txtruleName"/>
                         </td>
                         <td class="rm_tdinput">
-                            <p:inputText dir="ltr" id="txtruleName" value="#{entity.ruleName}"
+                            <p:inputText dir="ltr" id="txtruleName"
+                                         requiredMessage="#{msgUtil.getProperty('required_ruleName')}"
+                                         value="#{entity.ruleName}"
                                          required="true"></p:inputText>
-                        </td>
-                        <td class="rm_tdlabel">
-
-                            <p:outputLabel value="#{msgUtil.getProperty('resourceType')}" for="resourceType"/>
-                        </td>
-                        <td class="rm_tdinput">
-                           <p:selectOneMenu id="resourceType" value="#{entity.resourceType}">
-                               <f:selectItems value="#{ruleVM.resourceTypes}"></f:selectItems>
-                           </p:selectOneMenu>
-                        </td>
-                        <td class="rm_tdlabel">
-                            <p:outputLabel value="#{msgUtil.getProperty('rule_display_name')}" for="displayName"/>
-                        </td>
-                        <td class="rm_tdinput">
-                            <p:inputText id="displayName" value="#{entity.ruleDisplayName}"></p:inputText>
                         </td>
                         <td class="rm_tdlabel">
                             <p:outputLabel value="#{msgUtil.getProperty('versionNumber')}" for="versionNumber"/>
@@ -69,6 +93,24 @@
                             <p:inputText id="versionNumber" value="#{entity.versionNumber}"></p:inputText>
 
                         </td>
+                    </tr>
+                    <tr>
+
+                        <td class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('resourceType')}" for="resourceType"/>
+                        </td>
+                        <td class="rm_tdinput">
+                            <p:selectOneMenu style="width: 120px" id="resourceType" value="#{entity.resourceType}">
+                                <f:selectItems value="#{ruleVM.resourceTypes}"></f:selectItems>
+                            </p:selectOneMenu>
+                        </td>
+                        <td class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('rule_display_name')}" for="displayName"/>
+                        </td>
+                        <td class="rm_tdinput">
+                            <p:inputText id="displayName" value="#{entity.ruleDisplayName}"></p:inputText>
+                        </td>
+
                     </tr>
 
                     <tr>
@@ -91,40 +133,53 @@
                     </tr>
                     <tr>
                         <td colspan="8" style="direction: ltr">
-                            <p:inputTextarea value="#{entity.ruleContentStr}" id="ruleEditorTextArea" cols="150" rows="20">
+                            <p:inputTextarea value="#{entity.ruleContentStr}" id="ruleEditorTextArea" cols="150"
+                                             rows="20">
 
                             </p:inputTextarea>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div id="rm_left_panel" class="rm_panel"  style="text-align: left;overflow: hidden">
-              <h:panelGrid columns="1">
-                <h:panelGrid columns="3"  style="direction: ltr; width: 300px">
-                    <p:spacer></p:spacer>
-                    <p:autoComplete  id="packeages" value="#{ruleVM.selectedPackage}" tabindex="3"
-                                    style="font-size: 0.9em" size="30"  itemLabel="#{pck}"
-                                    itemValue="#{pck}"
-                                    completeMethod="#{rawRuleController.completePackageList}"  var="pck" cache="true" >
-                        <p:ajax event="change" process="@this" update="classes" listener="#{rawRuleController.packageChanged()}"/>
-                        <p:ajax event="itemSelect" process="@this" update="classes" listener="#{rawRuleController.packageChanged()}"/>
-                    </p:autoComplete>
-                    <p:outputLabel value="#{msgUtil.getProperty('rulePackage')}" for="packeages"></p:outputLabel>
+            <div id="rm_left_panel" class="rm_panel" style="text-align: left;overflow: hidden">
+                <h:panelGrid columns="1">
+                    <h:panelGrid columns="3" style="direction: ltr; width: 300px">
+                        <p:spacer></p:spacer>
+                        <p:autoComplete id="packeages" value="#{ruleVM.selectedPackage}" tabindex="3"
+                                        style="font-size: 0.9em" size="30" itemLabel="#{pck}"
+                                        itemValue="#{pck}"
+                                        completeMethod="#{rawRuleController.completePackageList}" var="pck"
+                                        cache="true">
+                            <p:ajax event="change" process="@this" update="classes"
+                                    listener="#{rawRuleController.packageChanged()}"/>
+                            <p:ajax event="itemSelect" process="@this" update="classes"
+                                    listener="#{rawRuleController.packageChanged()}"/>
+                        </p:autoComplete>
+                        <p:outputLabel value="#{msgUtil.getProperty('rulePackage')}" for="packeages"></p:outputLabel>
 
-                    <p:commandButton id="importBtn" tabindex="5"  icon="ui-icon-circle-plus" ajax="false"  process="@form" actionListener="#{rawRuleController.importClass(entity)}" update="@form" oncomplete=" makeEditorCodeMirror('importBtn');"></p:commandButton>
-                    <p:autoComplete  tabindex="4" id="classes" value="#{ruleVM.selectedclass}" style="font-size: 0.9em" size="30" cache="true"
-                                    completeMethod="#{rawRuleController.completeClassList}" >
-                    </p:autoComplete>
-                    <p:outputLabel value="#{msgUtil.getProperty('ruleClass')}" for="classes"></p:outputLabel>
+                        <p:commandButton id="importBtn" tabindex="5" icon="ui-icon-circle-plus" ajax="false"
+                                         process="@form" actionListener="#{rawRuleController.importClass(entity)}"
+                                         update="@form"
+                                         oncomplete=" makeEditorCodeMirror('importBtn');"></p:commandButton>
+                        <p:autoComplete tabindex="4" id="classes" value="#{ruleVM.selectedclass}"
+                                        style="font-size: 0.9em" size="30" cache="true"
+                                        completeMethod="#{rawRuleController.completeClassList}">
+                        </p:autoComplete>
+                        <p:outputLabel value="#{msgUtil.getProperty('ruleClass')}" for="classes"></p:outputLabel>
+                    </h:panelGrid>
+                    <h:dataTable value="#{ruleVM.importedClasses}" styleClass="codingStyle"
+                                 style="float: left;background-color: #d7d4f0" var="clz">
+
+                        <h:column>
+                            <p:commandButton id="UnimportBtn" tabindex="6" icon="ui-icon-circle-minus" ajax="false"
+                                             process="@form" actionListener="#{rawRuleController.removeImport(clz)}"
+                                             update="@form"></p:commandButton>
+                        </h:column>
+                        <h:column>
+                            <div class="codingStyle">#{clz}</div>
+                        </h:column>
+                    </h:dataTable>
                 </h:panelGrid>
-                <h:dataTable value="#{ruleVM.importedClasses}" styleClass="codingStyle" style="float: left;background-color: #d7d4f0" var="clz" >
-
-                    <h:column>
-                        <p:commandButton id="UnimportBtn" tabindex="6"  icon="ui-icon-circle-minus" ajax="false"  process="@form" actionListener="#{rawRuleController.removeImport(clz)}" update="@form" ></p:commandButton>
-                    </h:column>
-                    <h:column><div class="codingStyle">#{clz}</div></h:column>
-                </h:dataTable>
-              </h:panelGrid>
             </div>
         </div>
 

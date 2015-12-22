@@ -11,6 +11,7 @@
             <set name="entity" value="ruleVM.rawRule"/>
         </on-entry>
         <transition on="list" to="rawruleList" ></transition>
+
 </view-state>
     <view-state id="rawruleList" view="/WEB-INF/flows/rm/rawrule/rawruleList.xhtml">
         <on-entry>

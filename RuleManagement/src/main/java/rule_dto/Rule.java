@@ -7,7 +7,7 @@ import org.kie.api.io.Resource;
  */
 public class Rule extends BaseRule {
     private Resource resource;
-    private String ruleText;
+    private byte[] ruleContent;
 
     public void setResource(Resource resource) {
         this.resource = resource;
@@ -17,11 +17,11 @@ public class Rule extends BaseRule {
         return resource;
     }
 
-    public void setRuleText(String ruleText) {
-        this.ruleText = ruleText;
+    public void setRuleContent(byte[] ruleContent) {
+        this.ruleContent = ruleContent;
     }
 
-    public String getRuleText() {
-        return ruleText;
+    public byte[] getRuleContent() {
+        return ruleContent;
     }
 }

@@ -30,7 +30,16 @@ public class RuleViewModel implements Serializable {
     private String classList;
     private String methodList;
     private Boolean isNewMode;
+    private String compileMessage;
+    private Object availableGroups;
 
+    public String getCompileMessage() {
+        return compileMessage;
+    }
+
+    public void setCompileMessage(String compileMessage) {
+        this.compileMessage = compileMessage;
+    }
 
     public RuleResourceType[] getResourceTypes() {
         return RuleResourceType.values();
@@ -161,5 +170,13 @@ public class RuleViewModel implements Serializable {
 
     private String makeMethodInString(Method m) {
         return m.getName() + "()";
+    }
+
+    public void setAvailableGroups(Object availableGroups) {
+        this.availableGroups = availableGroups;
+    }
+
+    public Object getAvailableGroups() {
+        return availableGroups;
     }
 }

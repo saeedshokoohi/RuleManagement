@@ -1,11 +1,10 @@
 package rule_engine;
 
 import org.drools.compiler.kie.builder.impl.InternalKieModule;
+import org.drools.compiler.kproject.ReleaseIdImpl;
 import org.kie.api.KieServices;
-import org.kie.api.builder.KieBuilder;
-import org.kie.api.builder.KieFileSystem;
-import org.kie.api.builder.Message;
-import org.kie.api.builder.ReleaseId;
+import org.kie.api.builder.*;
+import org.kie.api.builder.model.KieModuleModel;
 import org.kie.api.io.KieResources;
 import rule_dto.CompiledRule;
 import rule_dto.Rule;
@@ -32,16 +31,23 @@ public class RuleCompilerImpl  implements RuleCompiler {
         //step 3 : write the resources to fileSystem
         KieFileSystem fileSystem = baseRuleAgents.kieServices.newKieFileSystem();
       //  fileSystem= fileSystem.write("/src/main/java/temp.drl",rule.getResource());
-        if(rule!=null && rule.getResource()!=null && rule.getRuleName()!=null )
-        fileSystem= fileSystem.write("src/main/resources/"+rule.getRuleName(),rule.getResource());
-
+        ReleaseId releseId = new ReleaseIdImpl("rayten","testRule","1.0");
+        if(rule!=null && rule.getResource()!=null && rule.getRuleName()!=null ) {
+            fileSystem.generateAndWritePomXML(releseId);
+            fileSystem= fileSystem.write("src/main/resources/"+rule.getRuleName()+".drl",rule.getResource());
+        }
+        //   KieModuleModel kmodel=baseRuleAgents.kieServices.newKieModuleModel();
         //step 4 : build the rule are temporary stored in filesystem
         KieBuilder kieBuilder=baseRuleAgents.kieServices.newKieBuilder(fileSystem);
         KieBuilder r = kieBuilder.buildAll();
         if(!r.getResults().hasMessages(Message.Level.ERROR)) {
             result.setDone(true);
             result.setMessages(r.getResults().getMessages());
-            compiledRule.setBuilder(kieBuilder);
+            //    ReleaseId releseId = baseRuleAgents.getKieRepository().getDefaultReleaseId();
+
+            InternalKieModule kmodule = (InternalKieModule) baseRuleAgents.getKieRepository().getKieModule(releseId);
+            compiledRule.setReleaseId(kmodule.getReleaseId());
+            compiledRule.setKjarFile(kmodule.getBytes());
         }
         else
         {

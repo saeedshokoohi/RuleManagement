@@ -4,6 +4,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 /**
  * Created by saeed on 01/01/2016.
@@ -30,7 +31,12 @@ public class MessageUtil {
     }
     public  void addErrorMessage(String clientId,String messageKey)
     {
-      addErrorMessage(clientId,messageKey);
+      addErrorMessage(clientId,messageKey,"");
+    }
+    public  void addErrorMessages(String clientId,List<String> messageKeys)
+    {
+        for(String m:messageKeys)
+        addErrorMessage(clientId,m);
     }
 
     public void addErrorMessage(String clientId, String messageKey, String detail) {

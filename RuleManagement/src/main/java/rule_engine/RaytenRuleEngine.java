@@ -1,14 +1,24 @@
 package rule_engine;
 
-import org.kie.api.builder.Message;
+import domain.RmCompiledRule;
+import domain.RmRawRule;
+import repository.CompiledRuleRepository;
 import rule_dto.*;
 import rule_dto.CompiledRule;
 import rule_dto.Rule;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.UUID;
+
 /**
  * Created by saeed on 02/12/2015.
  */
+@Named
 public class RaytenRuleEngine {
+
+    @Inject
+    CompiledRuleRepository compiledRuleRepository;
 
 
     private RuleLoader loader;
@@ -77,4 +87,42 @@ public class RaytenRuleEngine {
     }
 
 
+    public MethodResult compileRawRule(RmRawRule rawRule) {
+
+        MethodResult result=new MethodResult();
+        Rule rule = getLoader().getRuleFromRawRule(rawRule);
+        try {
+            CompiledRule compiledRule = getCompiler().compileRule(result, rule);
+        }catch (Exception ex)
+        {
+            result.setDone(false);
+        }
+        return  result;
+    }
+    public MethodResult publishRule(RmRawRule rawRule) {
+
+        MethodResult result=new MethodResult();
+        Rule rule = getLoader().getRuleFromRawRule(rawRule);
+        try {
+            CompiledRule compiledRule = getCompiler().compileRule(result, rule);
+            if(result.isDone()) {
+                RmCompiledRule rmCompiledRule = new RmCompiledRule();
+                rmCompiledRule.setRuleName(rawRule.getRuleName());
+                rmCompiledRule.setId(UUID.randomUUID());
+                rmCompiledRule.setKjarFile(compiledRule.getKjarFile());
+                rmCompiledRule.setArtifactId(compiledRule.getReleaseId().getArtifactId());
+                rmCompiledRule.setGroupId(compiledRule.getReleaseId().getGroupId());
+                rmCompiledRule.setVersionId(compiledRule.getReleaseId().getVersion());
+                rmCompiledRule.setRuleRefEntity(rawRule);
+
+                compiledRuleRepository.saveOrUpdate(rmCompiledRule);
+            }
+
+        }catch (Exception ex)
+        {
+            ex.printStackTrace();
+            result.setDone(false);
+        }
+        return  result;
+    }
 }

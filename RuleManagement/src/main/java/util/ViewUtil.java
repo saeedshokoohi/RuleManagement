@@ -32,4 +32,16 @@ public class ViewUtil {
         }
         return  retObject;
     }
+
+    public static String convertListToHtmlList(List<String> displayMessages) {
+        String htmlList="";
+        if(displayMessages!=null && displayMessages.size()>0) {
+            for (String m : displayMessages) {
+                htmlList += "<li>" + m + "</li>";
+            }
+            if (displayMessages.size() > 0)
+                htmlList = "<ul>" + htmlList + "</ul>";
+        }
+        return  htmlList;
+    }
 }

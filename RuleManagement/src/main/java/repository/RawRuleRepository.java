@@ -13,6 +13,8 @@ import repository.support.GenericRepository;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.persistence.Query;
+import java.util.List;
 
 @Named
 @Singleton
@@ -37,4 +39,9 @@ public class RawRuleRepository extends GenericRepository<RmRawRule> {
     }
 
 
+    public List<String> findGroups(String val) {
+        Query q = getEm().createQuery("select r.groupId from RmRawRule r group by r.groupId having groupId like %:str%")
+                .setParameter("str", val);
+        return q.getResultList();
+    }
 }

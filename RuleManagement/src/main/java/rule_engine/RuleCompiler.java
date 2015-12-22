@@ -10,8 +10,9 @@ public interface RuleCompiler {
 
     /**
      * this method try to compile given rule
-     * @param rule
-     * @return CompiledRule object
+     * @param result , the compile result set to the MethodResult
+     * @param rule , the rule which want to be compiled
+     * @return CompiledRule object , the compiled rule will be return if God wants!
      */
     CompiledRule compileRule(MethodResult result, Rule rule);
 

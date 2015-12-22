@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.RequestContextHolder;
 import repository.RawRuleRepository;
+import rule_engine.MethodResult;
+import rule_engine.RaytenRuleEngine;
 import util.ClassFinder;
 import util.MessageUtil;
 import util.ResourcesUtil;
@@ -40,11 +42,7 @@ public class RawRuleController {
 
     public void save(RmRawRule entity)
     {
-       // RmRawRule entity=new RmRawRule();
-      //  entity.setResourceType("DRL");
-      //  entity.setRuleName("firstRule");
-     //   entity.setVersionNumber("1.0");
-      //  rawRuleRepository.findAll();
+
         try {
             entity.setImports(ViewUtil.ObjectToJsonStr(getRuleVM().getImportedClasses()));
             rawRuleRepository.saveOrUpdate(entity);
@@ -55,6 +53,39 @@ public class RawRuleController {
             messageUtil.addErrorMessage("","saved_failed",ex.getMessage());
         }
     }
+    @Inject
+    RaytenRuleEngine raytenRuleEngine;
+    public void compileRule(RmRawRule entity)
+    {
+        MethodResult result = raytenRuleEngine.compileRawRule(entity);
+        if(result.isDone())
+        {
+            getRuleVM().setCompileMessage("");
+            messageUtil.addInfoMessage("","compiled_successfully");
+
+        }else
+        {
+            messageUtil.addErrorMessage("","compiled_failed");
+           getRuleVM().setCompileMessage(ViewUtil.convertListToHtmlList(result.getDisplayMessages()));
+
+        }
+    }
+    public void publishRule(RmRawRule entity)
+    {
+        MethodResult result = raytenRuleEngine.publishRule(entity);
+        if(result.isDone())
+        {
+            getRuleVM().setCompileMessage("");
+            messageUtil.addInfoMessage("","publish_successfully");
+
+        }else
+        {
+            messageUtil.addErrorMessage("","publish_failed");
+            getRuleVM().setCompileMessage(ViewUtil.convertListToHtmlList(result.getDisplayMessages()));
+
+        }
+    }
+
 
     public void initRawRuleList(RuleViewModel ruleVM ) {
         List<RmRawRule> ruleList=rawRuleRepository.findAll();
@@ -100,6 +131,12 @@ public class RawRuleController {
                 break;
         }
         return classlist;
+    }
+    public List<String> completeGroupId(String val)
+    {
+        List<String> retList=new ArrayList<String>();
+        retList=rawRuleRepository.findGroups(val);
+        return retList;
     }
     public void packageChanged()
     {

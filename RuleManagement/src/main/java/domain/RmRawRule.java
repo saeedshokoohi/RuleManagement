@@ -19,6 +19,7 @@ public class RmRawRule extends BaseEntity {
     private byte[] ruleContent;
     private String ruleContentStr;
     private String imports;
+    private String groupId;
 
 
 
@@ -30,6 +31,15 @@ public class RmRawRule extends BaseEntity {
 
     public void setRuleName(String ruleName) {
         this.ruleName = ruleName;
+    }
+
+    @Column(name = "group_id")
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     @Basic

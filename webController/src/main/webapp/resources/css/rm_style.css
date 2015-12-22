@@ -25,6 +25,10 @@ body{
     background-color: darkgray;
 
 }
+.rm_hpanel
+{
+    float: right;
+}
 .rm_panel
 {
     border: 1px solid rgb(154,154,154);
@@ -69,4 +73,24 @@ padding: 3px;
     font-family: monospace !important;
     font-size: 13px !important;
     direction: ltr !important;
+}
+.rm_compileErrors{
+    background: #ffffaa;
+    max-height: 200px;
+    overflow: auto;
+    color: #aa1111;
+}
+.rm_compileErrors > label > ul{
+    direction: ltr;
+    font-size: 12px !important;
+    font-family: monospace !important;
+}
+.rm_compileErrors  > label > ul > li{
+font-size: 12px !important;
+    font-family: monospace !important;
+}
+.verticalLine {
+    margin: 0 12px 0 10px;
+    float: right;
+    border-left: 1px solid #999977;
 }

@@ -32,6 +32,7 @@ public class RuleRunnerImpl implements RuleRunner {
         //step 5 : creating Container
         KieContainer kieContainer=baseRuleAgents.kieServices.newKieContainer(baseRuleAgents.kieServices.getRepository().getDefaultReleaseId());
 
+
         //step 6 : creating session
         //KieSession kiessession = kieContainer.newKieSession();
         KieBase kiebase = kieContainer.getKieBase();

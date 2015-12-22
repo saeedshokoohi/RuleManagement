@@ -22,6 +22,11 @@ public class BaseRuleAgents {
     public KieResources kieResources;
     public KieRepository kieRepository;
 
+    public KieRepository getKieRepository() {
+        if(kieRepository==null)kieRepository=kieServices.getRepository();
+        return kieRepository;
+    }
+
     public BaseRuleAgents() {
 
     }

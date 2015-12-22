@@ -1,5 +1,6 @@
 package rule_engine;
 
+import domain.RmRawRule;
 import rule_dto.Rule;
 import rule_dto.RuleCollection;
 import rule_dto.RuleQuery;
@@ -27,5 +28,12 @@ public interface RuleLoader {
 
     BaseRuleAgents getBaseRuleAgents();
     void setBaseRuleAgents(BaseRuleAgents baseRuleAgents);
+
+    /**
+     * get a raw rule object and make RuleDto Object
+     * @param rawRule
+     * @return
+     */
+    public Rule getRuleFromRawRule(RmRawRule rawRule);
 
 }

@@ -1,17 +1,15 @@
 package rule_engine;
 
+import domain.RmRawRule;
 import org.kie.api.KieServices;
 
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
 import rule_dto.Rule;
 import rule_dto.RuleCollection;
 import rule_dto.RuleQuery;
 
 import java.io.File;
-import java.io.Reader;
 import java.io.StringReader;
 
 /**
@@ -50,20 +48,26 @@ Rule retRuleDto=new Rule();
 
         //if single rule is type of DRL
         retRuleDto.setRuleName("tempSingleRule.drl");
-        String myRule = getRuleAsString(query);
-        Resource resource = baseRuleAgents.kieServices.getResources().newReaderResource(new StringReader(myRule));
+        byte[] myRule = getRuleAsString(query);
+        Resource resource = baseRuleAgents.kieServices.getResources().newByteArrayResource(myRule,"UTF-8");
         resource.setResourceType(ResourceType.DRL);
         retRuleDto.setResource(resource);
-        retRuleDto.setRuleText(myRule);
-
-
-
-
-
+        retRuleDto.setRuleContent(myRule);
     return retRuleDto;
     }
-    private String getRuleAsString(RuleQuery query) {
-        return "import entities.Student;\n" +
+    public Rule getRuleFromRawRule(RmRawRule rawRule)
+    {
+        Rule retRuleDto=new Rule();
+        retRuleDto.setRuleName(rawRule.getRuleName());
+        Resource resource = baseRuleAgents.kieServices.getResources().newByteArrayResource(rawRule.getRuleContent(),"UTF-8");
+        resource.setResourceType(ResourceType.getResourceType(rawRule.getResourceType()));
+        retRuleDto.setResource(resource);
+        retRuleDto.setRuleContent(rawRule.getRuleContent());
+        return retRuleDto;
+
+    }
+    private byte[] getRuleAsString(RuleQuery query) {
+        String retContent= "import entities.Student;\n" +
                 "dialect  \"java\"\n" +
                 "\n" +
                 "rule \"ruleGoodStudent\"\n" +
@@ -73,6 +77,7 @@ Rule retRuleDto=new Rule();
                 "    System.out.println($s.getName());\n" +
                 "    $s.alert();\n" +
                 "end";
+        return retContent.getBytes();
     }
     private File getRuleFile(RuleQuery query) {
         return null;

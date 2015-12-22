@@ -30,6 +30,9 @@ public class GenericRepository<E extends Identifiable<UUID>> {
     @Autowired
     org.springframework.context.ApplicationContext applicationContext;
 
+    public EntityManager getEm() {
+        return em;
+    }
 
     public GenericRepository() {
         //  em= applicationContext.getBean(EntityManager.class);
