@@ -66,12 +66,13 @@
                         <td class="rm_tdlabel">
                             <p:outputLabel value="#{msgUtil.getProperty('ruleGroup')}" for="ruleGroup"/>
                         </td>
-                        <td class="rm_tdinput" colspan="3">
-                            <p:autoComplete id="ruleGroup" style="width: 200px" value="#{entity.groupId}"
+                        <td class="rm_tdinput" >
+                            <p:autoComplete id="ruleGroup" style="direction: ltr"  value="#{entity.groupId}"
                                             itemLabel="#{pck}"
                                             itemValue="#{pck}"
                                             forceSelection="false"
                                             required="true"
+                                            size="50"
                                             requiredMessage="#{msgUtil.getProperty('required_groupId')}"
                                             completeMethod="#{rawRuleController.completeGroupId}" var="pck"
                                             cache="true"></p:autoComplete>
@@ -81,7 +82,7 @@
                             <p:outputLabel value="#{msgUtil.getProperty('rule_name')}" for="txtruleName"/>
                         </td>
                         <td class="rm_tdinput">
-                            <p:inputText dir="ltr" id="txtruleName"
+                            <p:inputText dir="ltr" id="txtruleName" size="35"
                                          requiredMessage="#{msgUtil.getProperty('required_ruleName')}"
                                          value="#{entity.ruleName}"
                                          required="true"></p:inputText>
@@ -90,12 +91,17 @@
                             <p:outputLabel value="#{msgUtil.getProperty('versionNumber')}" for="versionNumber"/>
                         </td>
                         <td class="rm_tdinput">
-                            <p:inputText id="versionNumber" value="#{entity.versionNumber}"></p:inputText>
+                            <p:inputText size="10" style="direction: ltr" id="versionNumber" value="#{entity.versionNumber}"></p:inputText>
 
                         </td>
                     </tr>
                     <tr>
-
+                        <td class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('rule_display_name')}" for="displayName"/>
+                        </td>
+                        <td class="rm_tdinput">
+                            <p:inputText size="50" id="displayName" value="#{entity.ruleDisplayName}"></p:inputText>
+                        </td>
                         <td class="rm_tdlabel">
                             <p:outputLabel value="#{msgUtil.getProperty('resourceType')}" for="resourceType"/>
                         </td>
@@ -104,12 +110,7 @@
                                 <f:selectItems value="#{ruleVM.resourceTypes}"></f:selectItems>
                             </p:selectOneMenu>
                         </td>
-                        <td class="rm_tdlabel">
-                            <p:outputLabel value="#{msgUtil.getProperty('rule_display_name')}" for="displayName"/>
-                        </td>
-                        <td class="rm_tdinput">
-                            <p:inputText id="displayName" value="#{entity.ruleDisplayName}"></p:inputText>
-                        </td>
+
 
                     </tr>
 
