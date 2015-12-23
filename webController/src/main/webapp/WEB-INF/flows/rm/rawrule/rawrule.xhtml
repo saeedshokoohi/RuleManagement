@@ -33,12 +33,12 @@
                     </div>
                     <div class="verticalLine" style="height: 30px"></div>
                     <div class="rm_hpanel">
-                        <p:commandButton ajax="false" rendered="#{entity.id!=null}" immediate="true"
+                        <p:commandButton ajax="false" rendered="#{entity.id!=null}"
                                          value="#{msgUtil.getProperty('compileRule')}"
                                          icon="ui-icon-gear"
                                          action="#{rawRuleController.compileRule(entity)}"></p:commandButton>
 
-                        <p:commandButton ajax="false" rendered="#{entity.id!=null}" immediate="true"
+                        <p:commandButton ajax="false" rendered="#{entity.id!=null}"
                                          value="#{msgUtil.getProperty('publish_rule')}"
                                          icon="ui-icon-signal-diag"
                                          action="#{rawRuleController.publishRule(entity)}"></p:commandButton>
