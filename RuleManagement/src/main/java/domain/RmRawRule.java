@@ -3,6 +3,7 @@ package domain;
 import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -155,5 +156,16 @@ if(ruleContent==null)return  "";
         result = 31 * result + (resourceType != null ? resourceType.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(ruleContent);
         return result;
+    }
+
+    private List<RmCompiledRule> oneToMany;
+
+    @OneToMany
+    public List<RmCompiledRule> getOneToMany() {
+        return oneToMany;
+    }
+
+    public void setOneToMany(List<RmCompiledRule> oneToMany) {
+        this.oneToMany = oneToMany;
     }
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head><title>Rule Defenition</title>
+
+</h:head>
+<h:outputStylesheet name="css/rm_style.css"/>
+
+<h:body>
+
+    <h:form prependId="false">
+        <f:view>
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h1>Create Personnel</h1>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="firstName:"/>
+                    <h:inputText value="#{entity.firstName}" title="firstName" />
+                    <h:outputText value="lastName:"/>
+                    <h:inputText value="#{entity.lastName}" title="lastName" />
+                    <h:outputText value="nationalNumber:"/>
+                    <h:inputText value="#{entity.nationalNumber}" title="nationalNumber" />
+                    <h:outputText value="age:"/>
+                    <h:inputText value="#{entity.age}" title="age" />
+                    <h:outputText value="gender:"/>
+                    <h:selectOneMenu value="#{entity.gender}" title="gender">
+                        <f:selectItem itemLabel="Male" itemValue="#{true}"/>
+                        <f:selectItem itemLabel="Female" itemValue="#{false}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+
+                <h:commandButton action="#{testController.save(entity)}" value="Save" />
+                <br/>
+            </h:form>
+        </f:view>
+
+    </h:form>
+</h:body>
+</html> 

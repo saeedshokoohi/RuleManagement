@@ -11,11 +11,13 @@ import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.definition.KnowledgePackage;
 import org.kie.internal.runtime.StatefulKnowledgeSession;
 
+import javax.inject.Named;
 import java.util.Collection;
 
 /**
  * Created by saeed on 03/12/2015.
  */
+@Named
 public class BaseRuleAgents {
     public KieServices kieServices;
     public KieFileSystem fileSystem;
@@ -28,6 +30,6 @@ public class BaseRuleAgents {
     }
 
     public BaseRuleAgents() {
-
+        kieServices=KieServices.Factory.get();
     }
 }

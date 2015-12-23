@@ -2,12 +2,11 @@ package rule_engine;
 
 import domain.RmCompiledRule;
 import domain.RmRawRule;
-import org.drools.compiler.kproject.ReleaseIdImpl;
 import org.kie.api.builder.ReleaseId;
+import org.springframework.context.ApplicationContext;
 import repository.CompiledRuleRepository;
 import rule_dto.*;
 import rule_dto.CompiledRule;
-import rule_dto.Rule;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,15 +18,17 @@ import java.util.UUID;
 @Named
 public class RaytenRuleEngine {
 
-    private static final String DEFAULT_GROUP = "com.isiran.rayten";
-    private static final String DEFAULT_ARTIFACT = "rule";
-    private static final String DEFAULT_VERSION = "1.0.SNAPSHOT";
+
+
     @Inject
     CompiledRuleRepository compiledRuleRepository;
 
 
+   @Inject
     private RuleLoader loader;
+    @Inject
     private RuleCompiler compiler;
+    @Inject
     private RuleRunner runner;
 
 
@@ -52,9 +53,9 @@ public class RaytenRuleEngine {
     }
 
     public RaytenRuleEngine() {
-        this.loader = new RuleLoaderImpl();
-        this.compiler =new RuleCompilerImpl(loader.getBaseRuleAgents());
-        this.runner = new RuleRunnerImpl(loader.getBaseRuleAgents());
+
+//        this.compiler.setBaseRuleAgent(loader.getBaseRuleAgents());
+//        this.runner.setBaseRuleAgent(loader.getBaseRuleAgents());
     }
 
     public RuleCompiler getCompiler() {
@@ -75,7 +76,7 @@ public class RaytenRuleEngine {
     public RuleResult runRule(RuleQuery query,RuleFact ruleFact)
     {
         RuleResult runResult=new RuleResult();
-        Rule rule = getLoader().getSingleRule(query);
+        CompiledRule rule = getLoader().getSingleRule(query);
         MethodResult result=new MethodResult();
 
         CompiledRule compiledRule = getCompiler().compileRule(result, rule, null);
@@ -95,7 +96,7 @@ public class RaytenRuleEngine {
     public MethodResult compileRawRule(RmRawRule rawRule) {
 
         MethodResult result=new MethodResult();
-        Rule rule = getLoader().getRuleFromRawRule(rawRule);
+        CompiledRule rule = getLoader().getRuleFromRawRule(rawRule);
         try {
             CompiledRule compiledRule = getCompiler().compileRule(result, rule, null);
         }catch (Exception ex)
@@ -107,9 +108,9 @@ public class RaytenRuleEngine {
     public MethodResult publishRule(RmRawRule rawRule) {
 
         MethodResult result=new MethodResult();
-        Rule rule = getLoader().getRuleFromRawRule(rawRule);
+        CompiledRule rule = getLoader().getRuleFromRawRule(rawRule);
         try {
-            ReleaseId releaseId=makeReleaseId(rawRule.getGroupId(),rawRule.getRuleName(),rawRule.getVersionNumber());
+            ReleaseId releaseId=RuleUtility.makeReleaseId(rawRule.getGroupId(),rawRule.getRuleName(),rawRule.getVersionNumber());
             CompiledRule compiledRule = getCompiler().compileRule(result, rule,releaseId);
             if(result.isDone()) {
                 RmCompiledRule rmCompiledRule = new RmCompiledRule();
@@ -119,9 +120,9 @@ public class RaytenRuleEngine {
                 rmCompiledRule.setArtifactId(compiledRule.getReleaseId().getArtifactId());
                 rmCompiledRule.setGroupId(compiledRule.getReleaseId().getGroupId());
                 rmCompiledRule.setVersionId(compiledRule.getReleaseId().getVersion());
-                rmCompiledRule.setRuleRefEntity(rawRule);
-
-                compiledRuleRepository.saveOrUpdate(rmCompiledRule);
+                rmCompiledRule.setRuleRef(rawRule.getId());
+                compiledRuleRepository.publishNewVersion(rmCompiledRule);
+             //   compiledRuleRepository.saveOrUpdate(rmCompiledRule);
             }
 
         }catch (Exception ex)
@@ -131,11 +132,21 @@ public class RaytenRuleEngine {
         }
         return  result;
     }
-    ReleaseId makeReleaseId(String group,String artifact,String version)
+    public RuleResult RunRuleByGroupId(String groupId,RuleFact fact)
     {
-        if(group==null || group.trim().length()==0)group=DEFAULT_GROUP;
-        if(artifact==null || artifact.trim().length()==0)artifact=DEFAULT_ARTIFACT;
-        if(version==null || version.trim().length()==0)version=DEFAULT_VERSION;
-        return new ReleaseIdImpl(group,artifact,version);
+        RuleQuery query=new RuleQuery();
+        query.setGroupId(groupId);
+        CompiledRule rule = loader.getSingleCompiledRule(query);
+        RuleResult result = runRule(rule, fact);
+        return result;
+
     }
+    public RuleResult runRule(CompiledRule compiledRuleEntity,RuleFact fact)
+    {
+        RuleResult ruleResult = runner.runRule(compiledRuleEntity, fact);
+        return  ruleResult;
+    }
+
+
+
 }

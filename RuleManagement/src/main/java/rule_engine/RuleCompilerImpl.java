@@ -1,26 +1,32 @@
 package rule_engine;
 
 import org.drools.compiler.kie.builder.impl.InternalKieModule;
-import org.drools.compiler.kproject.ReleaseIdImpl;
 import org.kie.api.KieServices;
 import org.kie.api.builder.*;
 import org.kie.api.io.KieResources;
 import rule_dto.CompiledRule;
-import rule_dto.Rule;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by Saeed on 02/12/2015.
  */
+@Named
 public class RuleCompilerImpl  implements RuleCompiler {
 
+    @Inject
     BaseRuleAgents baseRuleAgents;
+
+    public RuleCompilerImpl() {
+    }
 
     public RuleCompilerImpl(BaseRuleAgents baseRuleAgents) {
         this.baseRuleAgents = baseRuleAgents;
     }
 
     @Override
-    public CompiledRule compileRule(MethodResult result, Rule rule, ReleaseId releaseId){
+    public CompiledRule compileRule(MethodResult result, CompiledRule rule, ReleaseId releaseId){
 
 
         CompiledRule compiledRule=new CompiledRule();
@@ -56,6 +62,11 @@ public class RuleCompilerImpl  implements RuleCompiler {
         result.setWarningMessages(r.getResults().getMessages(Message.Level.WARNING));
         result.setInfoMessages(r.getResults().getMessages(Message.Level.INFO));
         return  compiledRule;
+    }
+
+    @Override
+    public void setBaseRuleAgent(BaseRuleAgents baseRuleAgents) {
+        this.baseRuleAgents=baseRuleAgents;
     }
 
     public static byte[] createKJar(KieServices ks,

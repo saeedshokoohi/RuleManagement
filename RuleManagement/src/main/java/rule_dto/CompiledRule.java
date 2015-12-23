@@ -3,6 +3,7 @@ package rule_dto;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.ReleaseId;
 import org.kie.api.builder.Results;
+import org.kie.api.io.Resource;
 
 /**
  * Created by saeed on 02/12/2015.
@@ -13,6 +14,7 @@ public class CompiledRule extends BaseRule {
     private byte[] kjarFile;
     private String releaseNumber;
     private ReleaseId releaseId;
+    private Resource resource;
 
     public void setBuilder(KieBuilder builder) {
         this.builder = builder;
@@ -44,5 +46,13 @@ public class CompiledRule extends BaseRule {
 
     public ReleaseId getReleaseId() {
         return releaseId;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+
+    public Resource getResource() {
+        return resource;
     }
 }

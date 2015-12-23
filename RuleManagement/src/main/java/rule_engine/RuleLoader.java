@@ -1,7 +1,7 @@
 package rule_engine;
 
 import domain.RmRawRule;
-import rule_dto.Rule;
+import rule_dto.CompiledRule;
 import rule_dto.RuleCollection;
 import rule_dto.RuleQuery;
 
@@ -17,7 +17,7 @@ public interface RuleLoader {
       * @param query
      * @return  null if no rule matches the given query
      */
-    public Rule getSingleRule(RuleQuery query);
+    public CompiledRule getSingleRule(RuleQuery query);
 
     /**
      * get a query to find  ruleS and return RuleCollection Object
@@ -34,6 +34,7 @@ public interface RuleLoader {
      * @param rawRule
      * @return
      */
-    public Rule getRuleFromRawRule(RmRawRule rawRule);
+    public CompiledRule getRuleFromRawRule(RmRawRule rawRule);
 
+    CompiledRule getSingleCompiledRule(RuleQuery query);
 }

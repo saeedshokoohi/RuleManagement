@@ -33,9 +33,16 @@ function getClassMethod(tokenstr) {
     console.log('methods');
     console.log(str);
     var allMethods = JSON.parse(str);
+    var allClasses=getClasses();
+
     if (str == '.')return allMethods;
     var filteredMethod = [];
     $.each(allMethods, function (n, val) {
+        if (val.toLowerCase().indexOf(tokenstr.toLowerCase()) > -1) {
+            filteredMethod.push(val);
+        }
+    });
+    $.each(allClasses, function (n, val) {
         if (val.toLowerCase().indexOf(tokenstr.toLowerCase()) > -1) {
             filteredMethod.push(val);
         }
@@ -51,7 +58,7 @@ function autocomplete(t, c) {
     //debugger;
     var newFrom = myCodeMirror.getCursor();
     var newTo = myCodeMirror.getCursor();
-    if (token.string.trim() != '') {
+    if (true || token.string.trim() != '') {
         debugger;
         var c2 = cursor;
         //c2.ch=cursor.ch-1;
@@ -74,9 +81,7 @@ function autocomplete(t, c) {
         return hint;
     });
     //console.log(token)
-    if (token == ".") {
-        myCodeMirror.replaceSelection("=", "end");
-    }
+
 
 }
 function makeEditorCodeMirror(btnid) {

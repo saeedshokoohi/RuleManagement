@@ -11,6 +11,7 @@
 >
     <context:component-scan base-package="repository"/>
     <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="rule_engine"/>
     <context:annotation-config/>
     <context:spring-configured/>
     <!--<bean id="studentController"  class="net.javabeat.managedController.StudentController" name="studentController"/>-->
@@ -89,9 +90,7 @@
         <property name="resourcesUtil" ref="msgUtil">
         </property>
     </bean>
-    <bean name="raytenRuleEngine" class="rule_engine.RaytenRuleEngine">
 
-    </bean>
     <!-- Transaction Manager is defined -->
     <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="SessionFactory"/>

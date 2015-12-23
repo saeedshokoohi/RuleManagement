@@ -17,4 +17,5 @@ public interface RuleRunner {
     RuleResult runRule(CompiledRule compiledRule, RuleFact ruleFact);
 
 
+    void setBaseRuleAgent(BaseRuleAgents baseRuleAgents);
 }

@@ -1,5 +1,7 @@
 package domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.UUID;
@@ -15,7 +17,7 @@ public class RmCompiledRule extends BaseEntity {
     private byte[] kjarFile;
     private String groupId;
     private String artifactId;
-//    private UUID ruleRef;
+    private UUID ruleRef;
     private RmRawRule ruleRefEntity;
 
 
@@ -29,22 +31,25 @@ public class RmCompiledRule extends BaseEntity {
         this.ruleName = ruleName;
     }
 
-//    @Column(name = "rule_ref")
-//    public UUID getRuleRef() {
-//        return ruleRef;
-//    }
-//
-//    public void setRuleRef(UUID ruleRef) {
-//        this.ruleRef = ruleRef;
-//    }
+    @Column(name = "rule_ref")
+    @Type(type="pg-uuid")
+    public UUID getRuleRef() {
+        return ruleRef;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "rule_ref",insertable = false ,updatable = false)
+    public void setRuleRef(UUID ruleRef) {
+        this.ruleRef = ruleRef;
+    }
+
+   @ManyToOne
+   @JoinColumn(name = "rule_ref",insertable = false,updatable = false)
     public RmRawRule getRuleRefEntity() {
         return ruleRefEntity;
     }
 
     public void setRuleRefEntity(RmRawRule ruleRefEntity) {
+        if(ruleRef!=null)
+        this.ruleRef=ruleRefEntity.getId();
         this.ruleRefEntity = ruleRefEntity;
     }
 

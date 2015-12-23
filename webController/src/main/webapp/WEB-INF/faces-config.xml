@@ -19,6 +19,41 @@
         </resource-bundle>
 
     </application>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>editPersonnel</from-outcome>
+            <to-view-id>/WEB-INF/Test/personnel/EditPersonnel.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>viewPersonnel</from-outcome>
+            <to-view-id>/WEB-INF/Test/personnel/ViewPersonnel.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>personnelList</from-outcome>
+            <to-view-id>/WEB-INF/Test/personnel/ListPersonnel.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>createPersonnel</from-outcome>
+            <to-view-id>/WEB-INF/Test/personnel/CreatePersonnel.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editOrgPosition</from-outcome>
+            <to-view-id>/WEB-INF/Test/orgPosition/EditOrgPosition.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>viewOrgPosition</from-outcome>
+            <to-view-id>/WEB-INF/Test/orgPosition/ViewOrgPosition.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>orgPositionList</from-outcome>
+            <to-view-id>/WEB-INF/Test/orgPosition/ListOrgPosition.jsp</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>createOrgPosition</from-outcome>
+            <to-view-id>/WEB-INF/Test/orgPosition/CreateOrgPosition.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 
     <!--<application>-->
         <!--<view-handler>javax.faces.application.ViewHandlerWrapper</view-handler>-->

@@ -10,10 +10,14 @@ package repository;
 
 import domain.RmCompiledRule;
 import domain.RmRawRule;
+import org.springframework.transaction.annotation.Transactional;
 import repository.support.GenericRepository;
+import rule_dto.CompiledRule;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.persistence.Query;
+import java.util.List;
 
 @Named
 @Singleton
@@ -22,5 +26,20 @@ public class CompiledRuleRepository extends GenericRepository<RmCompiledRule> {
         super(RmCompiledRule.class);
     }
 
+   @Transactional
+    public void publishNewVersion(RmCompiledRule rmCompiledRule) {
+       //delete other compiled version
+       if(rmCompiledRule!=null && rmCompiledRule.getRuleRef()!=null) {
+           Query deleteQuery = getEm().createQuery("delete from RmCompiledRule r where r.ruleRef=:rawRefId");
+           deleteQuery.setParameter("rawRefId", rmCompiledRule.getRuleRef()).executeUpdate();
+       }
+       saveOrUpdate(rmCompiledRule);
 
+    }
+
+    public List<RmCompiledRule> findByGroupId(String groupId) {
+        Query query=getEm().createQuery("select c from RmCompiledRule c where c.groupId=:groupId");
+        query.setParameter("groupId",groupId);
+        return query.getResultList();
+    }
 }
