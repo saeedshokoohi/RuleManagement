@@ -37,7 +37,7 @@ public class RuleCompilerImpl  implements RuleCompiler {
         if(releaseId==null)releaseId=baseRuleAgents.getKieRepository().getDefaultReleaseId();
         if(rule!=null && rule.getResource()!=null && rule.getRuleName()!=null ) {
             fileSystem.generateAndWritePomXML(releaseId);
-            fileSystem= fileSystem.write("src/main/resources/"+rule.getRuleName()+".drl",rule.getResource());
+            fileSystem= fileSystem.write("src/main/resources/"+rule.getRuleName()+"."+rule.getResource().getResourceType().getDefaultExtension(),rule.getResource());
         }
         //   KieModuleModel kmodel=baseRuleAgents.kieServices.newKieModuleModel();
         //step 4 : build the rule are temporary stored in filesystem

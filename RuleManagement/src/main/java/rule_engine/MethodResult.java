@@ -1,5 +1,6 @@
 package rule_engine;
 
+import org.drools.compiler.kie.builder.impl.MessageImpl;
 import org.kie.api.builder.Message;
 
 import java.util.ArrayList;
@@ -10,10 +11,10 @@ import java.util.List;
  */
 public class MethodResult {
     private boolean done;
-    private List<Message> messages;
-    private List<Message> errorMessages;
-    private List<Message> warningMessages;
-    private List<Message> infoMessages;
+    private List<Message> messages=new ArrayList<Message>();
+    private List<Message> errorMessages=new ArrayList<Message>();
+    private List<Message> warningMessages=new ArrayList<Message>();
+    private List<Message> infoMessages=new ArrayList<Message>();
 
     public boolean isDone() {
         return done;
@@ -68,5 +69,13 @@ public class MethodResult {
 
     private String makeMessageFormat(Message m) {
         return m.getLevel().toString()+" : "+m.getText()+" / line :"+m.getLine() +" / column :"+m.getColumn() ;
+    }
+
+    public void addException(Exception ex)
+    {
+        Message.Level l= Message.Level.ERROR;
+        Message err=new MessageImpl(1L, l,"",ex.getMessage());
+        getErrorMessages().add(err);
+        getMessages().add(err);
     }
 }

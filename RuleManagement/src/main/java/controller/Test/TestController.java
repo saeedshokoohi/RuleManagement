@@ -46,7 +46,7 @@ public class TestController {
         try {
             RuleFact facts=new RuleFact();
             facts.insertBObject(entity);
-            RuleResult result = raytenRuleEngine.RunRuleByGroupId("com.isiran.hr.personnel", facts);
+            RuleResult result = raytenRuleEngine.RunRuleByGroupId("com.isiran.test", facts);
             testRepository.saveOrUpdate(entity);
             messageUtil.addInfoMessage("","saved_successfully");
         }catch (Exception ex)

@@ -8,9 +8,12 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import repository.RawRuleRepository;
 import rule_engine.RuleContentTypes;
+import util.ResourcesUtil;
 import util.ViewUtil;
 
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -22,7 +25,7 @@ import java.util.List;
 /**
  * Created by saeed on 31/12/2015.
  */
-
+@Named
 public class RuleViewModel implements Serializable {
 
 
@@ -40,6 +43,7 @@ public class RuleViewModel implements Serializable {
     private boolean fromFile=false;
     private UploadedFile ruleFile;
     private StreamedContent ruleFileForDownload;
+
 
     public UploadedFile getRuleFile() {
         return ruleFile;
@@ -61,9 +65,9 @@ public class RuleViewModel implements Serializable {
         List<SelectItem> retList=new ArrayList<SelectItem>();
         for(RuleResourceType rrt:RuleResourceType.values())
         {
-            retList.add(new SelectItem(rrt.getKey(), rrt.getDescription()));
+            retList.add(new SelectItem(rrt.getKey(),rrt.getDescription()));
         }
-
+        System.out.println();
         return retList;
     }
 
@@ -94,6 +98,7 @@ public class RuleViewModel implements Serializable {
     }
 
     public void initRawRule() {
+        compileMessage="";
         //new mode
         if (isNewMode == null || isNewMode) {
             this.rawRule = new RmRawRule();

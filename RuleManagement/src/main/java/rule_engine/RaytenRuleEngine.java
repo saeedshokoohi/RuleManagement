@@ -102,6 +102,7 @@ public class RaytenRuleEngine {
         }catch (Exception ex)
         {
             result.setDone(false);
+            result.addException(ex);
         }
         return  result;
     }

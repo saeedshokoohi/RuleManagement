@@ -108,7 +108,7 @@
                         <td class="rm_tdinput">
                             <p:selectOneMenu style="width: 120px" id="resourceType" value="#{entity.resourceType}">
                                 <f:selectItems value="#{ruleVM.resourceTypes}" var="val"
-                                               itemLable="#{msgUtil.getProperty(val.label)}"
+                                               itemLable="#{val.label}"
                                                ></f:selectItems>
                             </p:selectOneMenu>
                         </td>

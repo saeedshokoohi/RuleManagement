@@ -5,7 +5,7 @@ package domain;
  */
 public enum RuleResourceType {
     DRL("DRL","drl","DroolsRule"),
-    DTABLE("DTABLE","xlsx","DecisionTable"),
+    DTABLE("DTABLE","xls","DecisionTable"),
     PKG("PKG","jar","BinaryPackage");
 
     RuleResourceType(String key, String extension, String descrption) {

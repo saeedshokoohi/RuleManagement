@@ -15,6 +15,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.io.Serializable;
 import java.util.Locale;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Locale;
 @Named
 @Singleton
 @Lazy(false)
-public class ResourcesUtil {
+public class ResourcesUtil  {
 
     private static ResourcesUtil instance;
     private MessageSource messageSource;
