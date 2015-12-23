@@ -63,10 +63,10 @@ function autocomplete(t, c) {
         var c2 = cursor;
         //c2.ch=cursor.ch-1;
         token = myCodeMirror.getTokenAt(c2);
-        hintList = getClassMethod(token.string);
+        hintList = getClassMethod(token.string.trim());
         //cursor.ch++;
         if (hintList.length > 0 && token.string != ".")
-            newFrom.ch = newFrom.ch - token.string.length;
+            newFrom.ch = newFrom.ch - token.string.trim().length;
     }
     var hint = {};
 
