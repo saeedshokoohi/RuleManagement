@@ -65,15 +65,15 @@
 
     <!-- Enable the configuration of transactional behavior based on annotations -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
-    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-        <property name="scopes">
-            <map>
-                <entry key="view">
-                    <bean class="util.ViewScope"/>
-                </entry>
-            </map>
-        </property>
-    </bean>
+    <!--<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">-->
+        <!--<property name="scopes">-->
+            <!--<map>-->
+                <!--<entry key="view">-->
+                    <!--<bean class="util.ViewScope"/>-->
+                <!--</entry>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
     <bean name="resources" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="useCodeAsDefaultMessage" value="true"/>

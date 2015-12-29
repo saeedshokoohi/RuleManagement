@@ -23,7 +23,7 @@ public class RawRuleController {
         entity.setResourceType("DRL");
       //  entity.setRuleName("firstRule");
      //   entity.setVersionNumber("1.0");
-        rawRuleRepository.findAll();
+      //  rawRuleRepository.findAll();
         rawRuleRepository.save(entity);
     }
 

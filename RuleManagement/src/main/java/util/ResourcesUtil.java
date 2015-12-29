@@ -75,6 +75,22 @@ public class ResourcesUtil {
         }
 
     }
+    /**
+     * Return the property value for the contextual locale.
+     * If no value is found, the given key is returned.
+     */
+    public String getProperty(String key) {
+        if (key == null) {
+            return "";
+        }
+        try {
+            return msg.getMessage(key, null, Locale.getDefault());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return key;
+        }
+
+    }
 
     /**
      * Same as {@link #getProperty(String, Object...)} but use the count to choose the proper key.

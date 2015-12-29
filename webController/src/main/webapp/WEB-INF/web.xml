@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
+
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
            version="3.0">
+
     <display-name>PrimeFaces Web Application</display-name>
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -22,20 +25,46 @@
         </listener-class>
     </listener>
     <!-- Change to "Production" when you are ready to deploy -->
+    <!--<servlet>-->
+        <!--<servlet-name>SpringServlet</servlet-name>-->
+        <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
+        <!--<init-param>-->
+            <!--<param-name>contextConfigLocation</param-name>-->
+            <!--<param-value>/WEB-INF/webflow_config.xml</param-value>-->
+        <!--</init-param>-->
+        <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
+
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>SpringServlet</servlet-name>-->
+        <!--<url-pattern>/app/</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet>
-        <servlet-name>SpringServlet</servlet-name>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>/WEB-INF/webflow_config.xml</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <!--</servlet-mapping>-->
+ <!--   <servlet>
+        <servlet-name>Resources Servlet</servlet-name>
+        <servlet-class>org.springframework.js.resource.ResourceServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>SpringServlet</servlet-name>
+        <servlet-name>Resources Servlet</servlet-name>
+        <url-pattern>/app/resources/*</url-pattern>
+        <url-pattern>/app/javax.faces.resource/*</url-pattern>
+    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
         <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
+
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -59,10 +88,12 @@
     </servlet>
 
     <!-- Map these files with JSF -->
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>Faces Servlet</servlet-name>-->
+        <!--<url-pattern>/faces/*</url-pattern>-->
+
+
+
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
@@ -96,3 +127,4 @@
 
 
 </web-app>
+
