@@ -7,9 +7,15 @@
 
 </h:head>
 <h:outputStylesheet  name="css/rm_style.css"  />
+<h:outputStylesheet  name="codemirror/codemirror.css"  />
+<h:outputStylesheet  name="codemirror/eclipse.css"  />
+<h:outputScript name="codemirror/codemirror.js"/>
+<h:outputScript name="js/rm_rule_editor.js"/>
+<h:outputScript name="codemirror/mode/clike/clike.js"/>
+<h:outputScript name="codemirror/mode/javascript/javascript.js"/>
 <h:body>
     TEST REBEL 4
-    <h:form>
+    <h:form prependId="false">
         <div class="rm_rule_editor">
             <div>
                 <p:messages >
@@ -45,9 +51,9 @@
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <p:inputTextarea cols="100" rows="20" value="#{entity.ruleContent}">
+                        <textarea id="ruleEditorTextArea" cols="100" rows="20" >
 
-                        </p:inputTextarea>
+                        </textarea>
                     </td>
                 </tr>
             </table>
