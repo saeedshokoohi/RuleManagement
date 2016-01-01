@@ -86,7 +86,10 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>glass-x</param-value>
+    </context-param>
     <!-- Map these files with JSF -->
     <!--<servlet-mapping>-->
         <!--<servlet-name>Faces Servlet</servlet-name>-->

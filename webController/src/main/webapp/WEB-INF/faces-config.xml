@@ -10,11 +10,11 @@
             <default-locale>fa</default-locale>
         </locale-config>
         <locale-config>
-            <default-locale>en</default-locale>
-            <supported-locale>fa</supported-locale>
+            <default-locale>fa</default-locale>
+            <supported-locale>en</supported-locale>
         </locale-config>
         <resource-bundle>
-            <base-name>local/rm_rule</base-name>
+            <base-name>local/rm_rawrule</base-name>
             <var>msg</var>
         </resource-bundle>
 

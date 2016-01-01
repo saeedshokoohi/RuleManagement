@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head><title>Rule Defenition</title>
+
+</h:head>
+<h:outputStylesheet  name="css/rm_style.css"  />
+
+<h:body>
+
+    <h:form prependId="false">
+        <p:commandButton ajax="false" icon="ui-icon-plus" value="#{msgUtil.getProperty('addNew')}" action="new"/>
+   <p:dataTable value="#{ruleVM.rawRuleList}" var="rule" selectionMode="single" selection="#{entity}" rowKey="#{rule.id}" >
+       <p:column>
+           <p:commandButton icon="ui-icon-pencil" ajax="false" action="#{rawRuleController.gotoEdit(rule,ruleVM)}"/>
+       </p:column>
+       <p:column headerText="#{msgUtil.getProperty('rule_name')}" >
+           #{rule.ruleName}
+       </p:column>
+       <p:column headerText="#{msgUtil.getProperty('rule_display_name')}" >
+           #{rule.ruleDisplayName}
+       </p:column>
+   </p:dataTable>
+    </h:form>
+</h:body>
+</html> 

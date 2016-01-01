@@ -68,4 +68,17 @@ public class GenericRepository<E extends Identifiable<UUID>> {
         em.merge(entity);
         return entity;
     }
+    @Transactional
+    public E saveOrUpdate(E entity) {
+        E e = findById(entity.getId());
+        if(e!=null)
+        {
+            em.merge(entity);
+        }
+        else {
+            if (entity.getId() == null) entity.setId(UUID.randomUUID());
+            em.persist(entity);
+        }
+        return entity;
+    }
 }

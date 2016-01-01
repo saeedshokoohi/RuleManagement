@@ -85,6 +85,10 @@
         <property name="msg" ref="resources">
         </property>
     </bean>
+    <bean name="messageUtil" class="util.MessageUtil">
+        <property name="resourcesUtil" ref="msgUtil">
+        </property>
+    </bean>
     <!-- Transaction Manager is defined -->
     <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="SessionFactory"/>

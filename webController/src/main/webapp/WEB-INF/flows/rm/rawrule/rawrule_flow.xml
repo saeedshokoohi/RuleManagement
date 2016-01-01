@@ -3,7 +3,23 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 <var name="entity" class="domain.RmRawRule" ></var>
-    <view-state id="rawrule" view="/WEB-INF/flows/rm/rawrule/rawrule.xhtml">
+<var name="ruleVM" class="controller.RuleViewModel"/>
 
+    <view-state id="rawrule" view="/WEB-INF/flows/rm/rawrule/rawrule.xhtml">
+        <on-entry>
+            <set name="entity" value="ruleVM.rawRule"/>
+        </on-entry>
+        <transition on="list" to="rawruleList" ></transition>
 </view-state>
+    <view-state id="rawruleList" view="/WEB-INF/flows/rm/rawrule/rawruleList.xhtml">
+        <on-entry>
+            <evaluate expression="rawRuleController.initRawRuleList(ruleVM)"/>
+            <set name="entity" value="ruleVM.rawRule"/>
+        </on-entry>
+        <transition on="edit" to="rawrule">
+        </transition>
+        <transition on="new" to="rawrule">
+            <set name="entity" value="rawRuleController.initRawRule()"/>
+        </transition>
+    </view-state>
 </flow>

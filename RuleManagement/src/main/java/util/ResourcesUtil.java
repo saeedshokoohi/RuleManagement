@@ -37,6 +37,7 @@ public class ResourcesUtil {
     public void setMsg(ResourceBundleMessageSource msg) {
         this.msg = msg;
         msg.setDefaultEncoding("utf-8");
+
     }
 
 //    @Inject
@@ -68,7 +69,7 @@ public class ResourcesUtil {
             return "";
         }
         try {
-            return msg.getMessage(key, args, Locale.getDefault());
+            return msg.getMessage(key, args, getLocale());
         } catch (Exception ex) {
             ex.printStackTrace();
             return key;
@@ -84,12 +85,16 @@ public class ResourcesUtil {
             return "";
         }
         try {
-            return msg.getMessage(key, null, Locale.getDefault());
+            return msg.getMessage(key, null,getLocale());
         } catch (Exception ex) {
             ex.printStackTrace();
             return key;
         }
 
+    }
+
+    private Locale getLocale() {
+            return new Locale("fa");
     }
 
     /**

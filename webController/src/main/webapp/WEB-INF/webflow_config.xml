@@ -12,7 +12,7 @@
 
     <!-- Setup Web Flow here -->
     <mvc:annotation-driven />
-    <mvc:resources location="/, /resources/ , classpath:/META-INF/resources/primefaces/, classpath:/META-INF/resources/primefaces-aristo/" mapping="/javax.faces.resource/**"/>
+    <mvc:resources location="/, /resources/ ,/resources/img , classpath:/META-INF/resources/primefaces/, classpath:/META-INF/resources/primefaces-aristo/" mapping="/javax.faces.resource/**"/>
     <webflow:flow-executor id="flowExecutor">
         <webflow:flow-execution-listeners>
             <webflow:listener ref="facesContextListener"/>

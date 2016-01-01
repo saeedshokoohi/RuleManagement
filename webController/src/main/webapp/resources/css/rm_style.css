@@ -1,6 +1,20 @@
 body{
-    direction: ltr;
-    font-family: Tahoma;
-    font-size: 12px;
+    direction: rtl;
+    font-family: yekan;
     background-color: beige;
+}
+
+.ui-state-default .ui-icon {
+    background-image: url("../img/ui-icons.png");
+}
+
+.ui-widget {
+    font-family: yekan!important;
+    font-size: 0.8em!important;
+}
+@font-face {
+    font-family: 'yekan';
+    src:url("../fonts/BYekan.eot?#") format("eot"),
+    url('../fonts/BYekan.woff') format('woff'),
+    url('../fonts/BYekan.ttf') format('truetype');
 }

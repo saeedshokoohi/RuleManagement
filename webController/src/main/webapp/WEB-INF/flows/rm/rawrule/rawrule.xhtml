@@ -14,7 +14,7 @@
 <h:outputScript name="codemirror/mode/clike/clike.js"/>
 <h:outputScript name="codemirror/mode/javascript/javascript.js"/>
 <h:body>
-    TEST REBEL 4
+
     <h:form prependId="false">
         <div class="rm_rule_editor">
             <div>
@@ -25,35 +25,47 @@
             <table>
                 <tr>
                     <td class="rm_tdlabel">
-                        <p:outputLabel value="#{msg.rule_name}" for="txtruleName"/>
+                        <p:outputLabel value="#{msgUtil.getProperty('rule_name')}" for="txtruleName"/>
                     </td>
                     <td class="rm_tdinput">
-                        <p:inputText id="txtruleName" value="#{entity.ruleName}" required="true" ></p:inputText>
+                        <p:inputText dir="ltr" id="txtruleName" value="#{entity.ruleName}" required="true" ></p:inputText>
                     </td>
                     <td class="rm_tdlabel">
-                        #{msgUtil.getProperty("rule_display_name")}
+                        <p:outputLabel value="#{msgUtil.getProperty('rule_display_name')}" for="displayName"/>
                     </td>
                     <td class="rm_tdinput">
-                        <p:inputText value="#{entity.ruleDisplayName}"></p:inputText>
+                        <p:inputText id="displayName" value="#{entity.ruleDisplayName}"></p:inputText>
                     </td>
                     <td class="rm_tdlabel">
-                        #{msg.versionNumber}
+                        <p:outputLabel value="#{msgUtil.getProperty('versionNumber')}" for="versionNumber"/>
                     </td>
                     <td class="rm_tdinput">
-                        <p:inputText value="#{entity.versionNumber}"></p:inputText>
+                        <p:inputText id="versionNumber" value="#{entity.versionNumber}"></p:inputText>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="rm_tdlabel">
+                        <p:outputLabel value="#{msgUtil.getProperty('ruleDescription')}" for="ruleDescription"/>
+                    </td>
+                    <td colspan="5" style="direction: rtl" >
+                        <p:inputTextarea id="ruleDescription" value="#{entity.ruleDescription}"   cols="100" rows="2" >
+
+                        </p:inputTextarea>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="5" class="rm_tdlabel">
-                        #{msg.ruleContent}
+                        <p:outputLabel value="#{msgUtil.getProperty('ruleContent')}" />
+
                     </td>
 
                 </tr>
                 <tr>
-                    <td colspan="6">
-                        <textarea id="ruleEditorTextArea" cols="100" rows="20" >
+                    <td colspan="6" style="direction: ltr" >
+                        <p:inputTextarea  value="#{entity.ruleContent}" id="ruleEditorTextArea"   cols="150" rows="20" >
 
-                        </textarea>
+                        </p:inputTextarea>
                     </td>
                 </tr>
             </table>
@@ -61,7 +73,8 @@
         <div>
 
         </div>
-    <p:commandButton ajax="false" value="SAVE PLEASE..." action="#{rawRuleController.save(entity)}" ></p:commandButton>
+    <p:commandButton ajax="false" value="#{msgUtil.getProperty('saveRule')}" icon="ui-icon-disk"  action="#{rawRuleController.save(entity)}" ></p:commandButton>
+    <p:commandButton ajax="false" immediate="true" value="#{msgUtil.getProperty('showRuleList')}" icon="ui-icon-search" action="list" ></p:commandButton>
     </h:form>
 </h:body>
 </html> 
