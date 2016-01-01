@@ -2,7 +2,10 @@ package controller;
 
 import domain.RmRawRule;
 import org.springframework.context.annotation.Scope;
+import org.springframework.webflow.execution.RequestContext;
+import org.springframework.webflow.execution.RequestContextHolder;
 import repository.RawRuleRepository;
+import util.ClassFinder;
 import util.MessageUtil;
 import util.ResourcesUtil;
 
@@ -10,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +29,13 @@ public class RawRuleController {
     ResourcesUtil resourcesUtil;
     @Inject
     MessageUtil messageUtil;
+
+
+    public RuleViewModel getRuleVM()
+    {
+        RequestContext requestContext = RequestContextHolder.getRequestContext();
+        return (RuleViewModel)requestContext.getFlowScope().get("ruleVM");
+    }
 
     public void save(RmRawRule entity)
     {
@@ -52,8 +63,54 @@ public class RawRuleController {
         ruleVM.setRawRule(e);
         return "edit";
     }
-    public RmRawRule initRawRule()
+    public void initRawRule(RuleViewModel ruleVM)
     {
-        return new RmRawRule();
+        ruleVM.initRawRule();
+    }
+    public List<String> completePackageList(String val)
+    {
+        List<String> filteredPackages=new ArrayList<String>();
+        Package[] packages = Package.getPackages();
+        for(Package p:packages)
+        {
+            if(p.getName().contains(val))
+            {
+                filteredPackages.add(p.getName());
+            }
+            if(filteredPackages.size()>20)break;
+        }
+        return filteredPackages;
+
+    }
+    public List<String> completeClassList(String val)
+    {
+        List<String> classlist=new ArrayList<String>();
+        RuleViewModel ruleVM = getRuleVM();
+
+        List<Class<?>> classes = ClassFinder.find(ruleVM.getSelectedPackage());
+        for(Class<?> c:classes)
+        {
+            if(c.getName().toLowerCase().contains(val) )
+            {
+                classlist.add(c.getName());
+            }
+            if(classlist.size()>20)
+                break;
+        }
+        return classlist;
+    }
+    public void packageChanged()
+    {
+        getRuleVM().getRawRule();
+    }
+    public void importClass()
+    {
+        String importstr=makeImportStr(getRuleVM().getSelectedclass());
+        getRuleVM().getRawRule().setRuleContent((importstr+getRuleVM().getRawRule().getRuleContent()).getBytes());
+
+    }
+
+    private String makeImportStr(String selectedclass) {
+        return " import "+selectedclass+"; /n";
     }
 }

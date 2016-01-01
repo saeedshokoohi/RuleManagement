@@ -22,6 +22,7 @@
                 <div id="rm_top_toolbar" class="rm_panel">
                     <p:commandButton ajax="false" value="#{msgUtil.getProperty('saveRule')}" icon="ui-icon-disk"
                                      action="#{rawRuleController.save(entity)}"></p:commandButton>
+
                     <p:commandButton ajax="false" immediate="true" value="#{msgUtil.getProperty('showRuleList')}"
                                      icon="ui-icon-search" action="list"></p:commandButton>
                 </div>
@@ -51,6 +52,9 @@
                         </td>
                         <td class="rm_tdinput">
                             <p:inputText id="versionNumber" value="#{entity.versionNumber}"></p:inputText>
+                         <script type="text/javascript" >
+                             makeEditorCodeMirror();
+                         </script>
                         </td>
                     </tr>
 
@@ -80,8 +84,24 @@
                     </tr>
                 </table>
             </div>
-            <div id="rm_left_panel" class="rm_panel">
-                left
+            <div id="rm_left_panel" class="rm_panel" style="text-align: left;overflow: hidden">
+                <h:panelGrid columns="2" style="direction: ltr; width: 300px">
+                    <p:autoComplete id="packeages" value="#{ruleVM.selectedPackage}"
+                                    style="font-size: 0.9em" size="30"  itemLabel="#{pck}"
+                                    itemValue="#{pck}"
+                                    completeMethod="#{rawRuleController.completePackageList}"  var="pck" cache="true" >
+                        <p:ajax event="change" process="@this" update="classes" listener="#{rawRuleController.packageChanged()}"/>
+                        <p:ajax event="itemSelect" process="@this" update="classes" listener="#{rawRuleController.packageChanged()}"/>
+                    </p:autoComplete>
+                    <p:outputLabel value="#{msgUtil.getProperty('rulePackage')}" for="packeages"></p:outputLabel>
+
+
+                    <p:autoComplete id="classes" value="#{ruleVM.selectedclass}" style="font-size: 0.9em" size="30" cache="true"
+                                    completeMethod="#{rawRuleController.completeClassList}" >
+                    </p:autoComplete>
+                    <p:outputLabel value="#{msgUtil.getProperty('ruleClass')}" for="classes"></p:outputLabel>
+                    <p:commandButton icon="ui-icon-circle-plus" process="classes" actionListener="#{rawRuleController.importClass()}" update="@form"></p:commandButton>
+                </h:panelGrid>
             </div>
         </div>
 

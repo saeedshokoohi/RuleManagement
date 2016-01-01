@@ -19,7 +19,7 @@
         <transition on="edit" to="rawrule">
         </transition>
         <transition on="new" to="rawrule">
-            <set name="entity" value="rawRuleController.initRawRule()"/>
+            <evaluate expression="rawRuleController.initRawRule(ruleVM)" />
         </transition>
     </view-state>
 </flow>

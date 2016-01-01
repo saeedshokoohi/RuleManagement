@@ -16,7 +16,7 @@
        <p:column>
            <p:commandButton icon="ui-icon-pencil" ajax="false" action="#{rawRuleController.gotoEdit(rule,ruleVM)}"/>
        </p:column>
-       <p:column headerText="#{msgUtil.getProperty('rule_name')}" >
+       <p:column headerText="#{msgUtil.getProperty('rule_name')}" filterBy="#{rule.ruleName}" >
            #{rule.ruleName}
        </p:column>
        <p:column headerText="#{msgUtil.getProperty('rule_display_name')}" >

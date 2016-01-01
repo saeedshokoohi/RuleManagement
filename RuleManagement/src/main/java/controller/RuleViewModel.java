@@ -17,6 +17,8 @@ public class RuleViewModel implements Serializable{
 
     private RmRawRule rawRule;
     private List<RmRawRule> rawRuleList;
+    private String selectedPackage;
+    private String selectedclass;
 
 
     public RmRawRule getRawRule() {
@@ -35,5 +37,25 @@ public class RuleViewModel implements Serializable{
 
     public void setRawRuleList(List<RmRawRule> rawRuleList) {
         this.rawRuleList = rawRuleList;
+    }
+
+    public void initRawRule() {
+        this.rawRule=new RmRawRule();
+    }
+
+    public String getSelectedPackage() {
+        return selectedPackage;
+    }
+
+    public void setSelectedPackage(String selectedPackage) {
+        this.selectedPackage = selectedPackage;
+    }
+
+    public void setSelectedclass(String selectedclass) {
+        this.selectedclass = selectedclass;
+    }
+
+    public String getSelectedclass() {
+        return selectedclass;
     }
 }

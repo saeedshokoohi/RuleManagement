@@ -5,6 +5,10 @@ var textAreaId='ruleEditorTextArea';
 $(document).ready(function()
 {
     console.log('page is ready');
+
+});
+function makeEditorCodeMirror()
+{
     var myTextArea=$('#'+textAreaId)[0];
     var options=
     {
@@ -13,4 +17,4 @@ $(document).ready(function()
     };
     var myCodeMirror = CodeMirror.fromTextArea(myTextArea,options);
 
-});
+}

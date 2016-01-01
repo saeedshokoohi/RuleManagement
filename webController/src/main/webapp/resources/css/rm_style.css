@@ -31,6 +31,7 @@ body{
     border-radius: 3px;
     margin: 2px;
     box-shadow:inset 0px 0px 20px rgba(111,111,111,0.1);
+    overflow: auto;
 }
 #rm_right_panel
 {

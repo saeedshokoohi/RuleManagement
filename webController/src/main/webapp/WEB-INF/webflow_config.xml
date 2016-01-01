@@ -17,6 +17,9 @@
         <webflow:flow-execution-listeners>
             <webflow:listener ref="facesContextListener"/>
         </webflow:flow-execution-listeners>
+        <webflow:flow-execution-attributes>
+            <webflow:redirect-in-same-state value="false"/>
+        </webflow:flow-execution-attributes>
     </webflow:flow-executor>
     <bean id="facesContextListener"
           class="org.springframework.faces.webflow.FlowFacesContextLifecycleListener"/>
