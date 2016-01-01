@@ -6,9 +6,9 @@
 <h:head><title>Rule Defenition</title>
 
 </h:head>
-<h:outputStylesheet  name="css/rm_style.css"  />
-<h:outputStylesheet  name="codemirror/codemirror.css"  />
-<h:outputStylesheet  name="codemirror/eclipse.css"  />
+<h:outputStylesheet name="css/rm_style.css"/>
+<h:outputStylesheet name="codemirror/codemirror.css"/>
+<h:outputStylesheet name="codemirror/eclipse.css"/>
 <h:outputScript name="codemirror/codemirror.js"/>
 <h:outputScript name="js/rm_rule_editor.js"/>
 <h:outputScript name="codemirror/mode/clike/clike.js"/>
@@ -16,65 +16,75 @@
 <h:body>
 
     <h:form prependId="false">
-        <div class="rm_rule_editor">
-            <div>
-                <p:messages >
+        <div id="rm_main_panel">
+            <div id="rm_right_panel" class="rm_panel">right</div>
+            <div id="rm_center_panel" class="rm_panel">
+                <div id="rm_top_toolbar" class="rm_panel">
+                    <p:commandButton ajax="false" value="#{msgUtil.getProperty('saveRule')}" icon="ui-icon-disk"
+                                     action="#{rawRuleController.save(entity)}"></p:commandButton>
+                    <p:commandButton ajax="false" immediate="true" value="#{msgUtil.getProperty('showRuleList')}"
+                                     icon="ui-icon-search" action="list"></p:commandButton>
+                </div>
+                <div id="rm_message_bar">
+                    <p:messages>
 
-                </p:messages>
+                    </p:messages>
+                </div>
+
+                <table>
+                    <tr>
+                        <td class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('rule_name')}" for="txtruleName"/>
+                        </td>
+                        <td class="rm_tdinput">
+                            <p:inputText dir="ltr" id="txtruleName" value="#{entity.ruleName}"
+                                         required="true"></p:inputText>
+                        </td>
+                        <td class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('rule_display_name')}" for="displayName"/>
+                        </td>
+                        <td class="rm_tdinput">
+                            <p:inputText id="displayName" value="#{entity.ruleDisplayName}"></p:inputText>
+                        </td>
+                        <td class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('versionNumber')}" for="versionNumber"/>
+                        </td>
+                        <td class="rm_tdinput">
+                            <p:inputText id="versionNumber" value="#{entity.versionNumber}"></p:inputText>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('ruleDescription')}" for="ruleDescription"/>
+                        </td>
+                        <td colspan="5" style="direction: rtl">
+                            <p:inputTextarea id="ruleDescription" value="#{entity.ruleDescription}" cols="100" rows="2">
+
+                            </p:inputTextarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="rm_tdlabel">
+                            <p:outputLabel value="#{msgUtil.getProperty('ruleContent')}"/>
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="direction: ltr">
+                            <p:inputTextarea value="#{entity.ruleContent}" id="ruleEditorTextArea" cols="150" rows="20">
+
+                            </p:inputTextarea>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <table>
-                <tr>
-                    <td class="rm_tdlabel">
-                        <p:outputLabel value="#{msgUtil.getProperty('rule_name')}" for="txtruleName"/>
-                    </td>
-                    <td class="rm_tdinput">
-                        <p:inputText dir="ltr" id="txtruleName" value="#{entity.ruleName}" required="true" ></p:inputText>
-                    </td>
-                    <td class="rm_tdlabel">
-                        <p:outputLabel value="#{msgUtil.getProperty('rule_display_name')}" for="displayName"/>
-                    </td>
-                    <td class="rm_tdinput">
-                        <p:inputText id="displayName" value="#{entity.ruleDisplayName}"></p:inputText>
-                    </td>
-                    <td class="rm_tdlabel">
-                        <p:outputLabel value="#{msgUtil.getProperty('versionNumber')}" for="versionNumber"/>
-                    </td>
-                    <td class="rm_tdinput">
-                        <p:inputText id="versionNumber" value="#{entity.versionNumber}"></p:inputText>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="rm_tdlabel">
-                        <p:outputLabel value="#{msgUtil.getProperty('ruleDescription')}" for="ruleDescription"/>
-                    </td>
-                    <td colspan="5" style="direction: rtl" >
-                        <p:inputTextarea id="ruleDescription" value="#{entity.ruleDescription}"   cols="100" rows="2" >
-
-                        </p:inputTextarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5" class="rm_tdlabel">
-                        <p:outputLabel value="#{msgUtil.getProperty('ruleContent')}" />
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td colspan="6" style="direction: ltr" >
-                        <p:inputTextarea  value="#{entity.ruleContent}" id="ruleEditorTextArea"   cols="150" rows="20" >
-
-                        </p:inputTextarea>
-                    </td>
-                </tr>
-            </table>
+            <div id="rm_left_panel" class="rm_panel">
+                left
+            </div>
         </div>
-        <div>
 
-        </div>
-    <p:commandButton ajax="false" value="#{msgUtil.getProperty('saveRule')}" icon="ui-icon-disk"  action="#{rawRuleController.save(entity)}" ></p:commandButton>
-    <p:commandButton ajax="false" immediate="true" value="#{msgUtil.getProperty('showRuleList')}" icon="ui-icon-search" action="list" ></p:commandButton>
     </h:form>
 </h:body>
 </html> 
