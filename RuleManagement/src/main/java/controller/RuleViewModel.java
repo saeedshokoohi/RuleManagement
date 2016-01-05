@@ -2,6 +2,7 @@ package controller;
 
 import domain.RmRawRule;
 import domain.RmRawRuleList;
+import repository.RawRuleRepository;
 
 import javax.inject.Named;
 import java.io.Serializable;
@@ -40,7 +41,9 @@ public class RuleViewModel implements Serializable{
     }
 
     public void initRawRule() {
+
         this.rawRule=new RmRawRule();
+        this.rawRule.setRuleContentStr(RawRuleRepository.getInitRuleTemplate("ruleName"));
     }
 
     public String getSelectedPackage() {

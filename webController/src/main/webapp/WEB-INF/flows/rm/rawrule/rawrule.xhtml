@@ -9,7 +9,11 @@
 <h:outputStylesheet name="css/rm_style.css"/>
 <h:outputStylesheet name="codemirror/codemirror.css"/>
 <h:outputStylesheet name="codemirror/eclipse.css"/>
+<h:outputStylesheet name="codemirror/show-hint.css"/>
 <h:outputScript name="codemirror/codemirror.js"/>
+<h:outputScript name="codemirror/anyword-hint.js"/>
+<h:outputScript name="codemirror/javascript-hint.js"/>
+<h:outputScript name="codemirror/show-hint.js"/>
 <h:outputScript name="js/rm_rule_editor.js"/>
 <h:outputScript name="codemirror/mode/clike/clike.js"/>
 <h:outputScript name="codemirror/mode/javascript/javascript.js"/>
@@ -52,9 +56,7 @@
                         </td>
                         <td class="rm_tdinput">
                             <p:inputText id="versionNumber" value="#{entity.versionNumber}"></p:inputText>
-                         <script type="text/javascript" >
-                             makeEditorCodeMirror();
-                         </script>
+
                         </td>
                     </tr>
 
@@ -66,6 +68,7 @@
                             <p:inputTextarea id="ruleDescription" value="#{entity.ruleDescription}" cols="100" rows="2">
 
                             </p:inputTextarea>
+
                         </td>
                     </tr>
                     <tr>
@@ -77,7 +80,7 @@
                     </tr>
                     <tr>
                         <td colspan="6" style="direction: ltr">
-                            <p:inputTextarea value="#{entity.ruleContent}" id="ruleEditorTextArea" cols="150" rows="20">
+                            <p:inputTextarea value="#{entity.ruleContentStr}" id="ruleEditorTextArea" cols="150" rows="20">
 
                             </p:inputTextarea>
                         </td>
@@ -100,7 +103,7 @@
                                     completeMethod="#{rawRuleController.completeClassList}" >
                     </p:autoComplete>
                     <p:outputLabel value="#{msgUtil.getProperty('ruleClass')}" for="classes"></p:outputLabel>
-                    <p:commandButton icon="ui-icon-circle-plus" process="classes" actionListener="#{rawRuleController.importClass()}" update="@form"></p:commandButton>
+                    <p:commandButton  icon="ui-icon-circle-plus" ajax="false" process="@form" actionListener="#{rawRuleController.importClass(entity)}" update="@form" oncomplete=" makeEditorCodeMirror();"></p:commandButton>
                 </h:panelGrid>
             </div>
         </div>

@@ -1,6 +1,7 @@
 package domain;
 
 import javax.persistence.*;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ public class RmRawRule extends BaseEntity {
     private String versionNumber;
     private String resourceType;
     private byte[] ruleContent;
+    private String ruleContentStr;
 
 
 
@@ -79,6 +81,26 @@ public class RmRawRule extends BaseEntity {
         this.ruleContent = ruleContent;
     }
 
+    @Transient
+    public String getRuleContentStr() {
+if(ruleContent==null)return  "";
+        try {
+            ruleContentStr=  new String(ruleContent, "UTF-8");
+            return ruleContentStr;
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+    }
+
+    public void setRuleContentStr(String ruleContentStr) {
+        if(ruleContentStr==null)ruleContentStr="";
+        ruleContent=ruleContentStr.getBytes();
+        this.ruleContentStr = ruleContentStr;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,6 +122,7 @@ public class RmRawRule extends BaseEntity {
 
         return true;
     }
+
 
     @Override
     public int hashCode() {

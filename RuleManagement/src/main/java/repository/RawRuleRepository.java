@@ -17,6 +17,21 @@ import javax.inject.Singleton;
 @Named
 @Singleton
 public class RawRuleRepository extends GenericRepository<RmRawRule> {
+
+    public static String getInitRuleTemplate(String ruleName)
+    {
+        String rule="\n\ndialect  \"java\"\n\n\n" +
+                "rule \""+ruleName+"\"\n\n" +
+                "when\n" +
+                "    /* the rule conditions\n" +
+                "      are here */\n" +
+                "then\n" +
+                "    /* \n" +
+                "        the right hand side of a rule */\n" +
+                "end ";
+        return  rule;
+
+    }
     public RawRuleRepository() {
         super(RmRawRule.class);
     }

@@ -103,14 +103,15 @@ public class RawRuleController {
     {
         getRuleVM().getRawRule();
     }
-    public void importClass()
+    public void importClass(RmRawRule rmRawRule)
     {
+        System.out.printf("importClass called");
         String importstr=makeImportStr(getRuleVM().getSelectedclass());
-        getRuleVM().getRawRule().setRuleContent((importstr+getRuleVM().getRawRule().getRuleContent()).getBytes());
+        rmRawRule.setRuleContentStr(importstr+rmRawRule.getRuleContentStr());
 
     }
 
     private String makeImportStr(String selectedclass) {
-        return " import "+selectedclass+"; /n";
+        return "import "+selectedclass+";\n";
     }
 }
