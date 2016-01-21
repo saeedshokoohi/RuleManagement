@@ -22,7 +22,13 @@ public class RawRuleRepository extends GenericRepository<RmRawRule> {
 
     public static String getInitRuleTemplate(String ruleName)
     {
-        String rule="\n\ndialect  \"java\"\n\n\n" +
+        String rule="\n\ndialect  \"java\"\n" +
+                "\n" +
+                "//no-loop false \n" +
+                "agenda-group 'MAIN' \n" +
+                "salience  0;\n\n" +
+                "//date-effective '01-JAN-2016'\n" +
+                "//date-expires   '01-JAN-2017' \n\n" +
                 "rule \""+ruleName+"\"\n\n" +
                 "when\n" +
                 "    /* the rule conditions\n" +

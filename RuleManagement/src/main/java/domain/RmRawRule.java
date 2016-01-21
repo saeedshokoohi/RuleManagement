@@ -145,7 +145,12 @@ if(ruleContent==null)return  "";
 
     public void setRuleContentStr(String ruleContentStr) {
         if(ruleContentStr==null)ruleContentStr="";
-        ruleContent=ruleContentStr.getBytes();
+        try {
+            ruleContent=ruleContentStr.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            ruleContent=ruleContentStr.getBytes();
+            System.out.println("ERROR :error using UTF-8 encoding for converting ruleStr to byte array!!");
+        }
         this.ruleContentStr = ruleContentStr;
     }
 
@@ -221,5 +226,16 @@ if(ruleContent==null)return  "";
 
     public void setRuleContentTypeObject(RuleContentTypes ruleContentTypeObject) {
         setRuleContentType(ruleContentTypeObject.name());
+    }
+    @Transient
+    public RuleResourceType getRuleResourceTypeObject() {
+        try{
+            return  RuleResourceType.valueOf(getResourceType());
+        }catch (Exception ex){}
+        return RuleResourceType.DRL;
+    }
+
+    public void setRuleResourceTypeObject(RuleResourceType ruleResourceTypeObject) {
+        setResourceType(ruleResourceTypeObject.name());
     }
 }

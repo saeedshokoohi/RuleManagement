@@ -149,5 +149,7 @@ public class RaytenRuleEngine {
     }
 
 
-
+    public RuleResult RunRuleByAgendaGroup(String s, RuleFact facts) {
+        return null;
+    }
 }

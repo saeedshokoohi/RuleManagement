@@ -3,6 +3,7 @@ package controller.Test;
 import controller.RuleViewModel;
 import domain.RmRawRule;
 import domain.Test.Personnel;
+import domain.Test.PersonnelOverTime;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.webflow.execution.RequestContext;
@@ -86,4 +87,23 @@ public class TestController {
         else
             return false;
     }
+
+    //injecting Rayten Rule Engine
+    @Inject
+    RaytenRuleEngine raytenRuleEngine;
+
+    public void caculateOverTime(Personnel personnel ,List<PersonnelOverTime> overTimeList)
+    {
+        //creating Fact to be added to working memmory
+        RuleFact facts=new RuleFact();
+        //inserting data as part of fact
+        facts.insertBObject(overTimeList);
+        facts.insertBObject(personnel);
+        //fire the rule
+        RuleResult result = raytenRuleEngine.RunRuleByAgendaGroup("sample_group", facts);
+
+    }
+
+
+
 }

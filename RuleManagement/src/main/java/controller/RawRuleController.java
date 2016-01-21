@@ -1,6 +1,7 @@
 package controller;
 
 import domain.RmRawRule;
+import domain.RuleResourceType;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.context.annotation.Scope;
@@ -25,6 +26,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.RuleResourceType.DRL;
+
 /**
  * Created by saeed on 15/12/2015.
  */
@@ -48,51 +51,85 @@ public class RawRuleController {
 
     public void save(RmRawRule entity)
     {
-
+        if(isRuleValid()) {
         try {
             entity.setImports(ViewUtil.ObjectToJsonStr(getRuleVM().getImportedClasses()));
 //            if(getRuleVM().isFromFile() && getRuleVM().getRuleFile()!=null) {
 //                entity.setRuleContent(getRuleVM().getRuleFile().getContents());
 //                entity.setFileType(getRuleVM().getRuleFile().getContentType());
 //            }
-            rawRuleRepository.saveOrUpdate(entity);
-            messageUtil.addInfoMessage("","saved_successfully");
+
+                rawRuleRepository.saveOrUpdate(entity);
+                messageUtil.addInfoMessage("", "saved_successfully");
+
         }catch (Exception ex)
         {
             ex.printStackTrace();
             messageUtil.addErrorMessage("","saved_failed",ex.getMessage());
         }
+        }
     }
+
+    private boolean isRuleValid() {
+        boolean isValid=true;
+        RuleResourceType ruleType = getRuleVM().getRawRule().getRuleResourceTypeObject();
+       switch (ruleType)
+       {
+           case DRL: {
+
+           }
+
+               break;
+           case DTABLE:
+           case PKG:
+           {
+               if(getRuleVM().getRawRule().getRuleContentTypeObject().equals(RuleContentTypes.TEXT_AS_RULE))
+               {
+                   messageUtil.addErrorMessage("","error_rule_content_must_be_file");
+                   return false;
+               }
+               if(getRuleVM().getRawRule().getRuleContent()==null || getRuleVM().getRawRule().getRuleContent().length==0)
+               {
+                   messageUtil.addErrorMessage("","error_rule_file_is_not_uploaded");
+                   return false;
+               }
+           }
+               break;
+       }
+        return isValid;
+
+    }
+
     @Inject
     RaytenRuleEngine raytenRuleEngine;
     public void compileRule(RmRawRule entity)
     {
-        MethodResult result = raytenRuleEngine.compileRawRule(entity);
-        if(result.isDone())
-        {
-            getRuleVM().setCompileMessage("");
-            messageUtil.addInfoMessage("","compiled_successfully");
+        if(isRuleValid()) {
+            MethodResult result = raytenRuleEngine.compileRawRule(entity);
+            if (result.isDone()) {
+                getRuleVM().setCompileMessage("");
+                messageUtil.addInfoMessage("", "compiled_successfully");
 
-        }else
-        {
-            messageUtil.addErrorMessage("","compiled_failed");
-           getRuleVM().setCompileMessage(ViewUtil.convertListToHtmlList(result.getDisplayMessages()));
+            } else {
+                messageUtil.addErrorMessage("", "compiled_failed");
+                getRuleVM().setCompileMessage(ViewUtil.convertListToHtmlList(result.getDisplayMessages()));
 
+            }
         }
     }
     public void publishRule(RmRawRule entity)
     {
-        MethodResult result = raytenRuleEngine.publishRule(entity);
-        if(result.isDone())
-        {
-            getRuleVM().setCompileMessage("");
-            messageUtil.addInfoMessage("","publish_successfully");
+        if(isRuleValid()) {
+            MethodResult result = raytenRuleEngine.publishRule(entity);
+            if (result.isDone()) {
+                getRuleVM().setCompileMessage("");
+                messageUtil.addInfoMessage("", "publish_successfully");
 
-        }else
-        {
-            messageUtil.addErrorMessage("","publish_failed");
-            getRuleVM().setCompileMessage(ViewUtil.convertListToHtmlList(result.getDisplayMessages()));
+            } else {
+                messageUtil.addErrorMessage("", "publish_failed");
+                getRuleVM().setCompileMessage(ViewUtil.convertListToHtmlList(result.getDisplayMessages()));
 
+            }
         }
     }
 
